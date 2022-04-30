@@ -47,7 +47,6 @@ router.put("/blogs/addlike/:blogId", async function (req, res, next) {
     await conn.rollback();
     return res.status(500).json(err);
   } finally {
-    console.log("finally");
     conn.release();
   }
 });

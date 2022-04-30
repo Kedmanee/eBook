@@ -121,7 +121,7 @@ export default {
       axios
         .post("http://localhost:5000/user/signup", data)
         .then((res) => {
-          alert("Sign up Success");
+          alert("Sign up Success !!");
           this.$router.push("/")
         })
         .catch((err) => {
