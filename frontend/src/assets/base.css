@@ -1,0 +1,55 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+  font-weight: normal;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+
+.box {
+  background-color: #f4fcd9;
+  border: 100px solid #c5d8a4;
+  padding: 100px;
+  margin: 20px;
+  border-radius: 50px 20px;
+}
+
+body {
+  background-color: #BB9981;
+  font-family: 'Kanit', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: transparent;
+}
+
+.content>* {
+  color: #534340 !important;
+}
+
+.content h1 {
+  text-align: center;
+}
+
+.container-signUp {
+  position: relative;
+  width: 70%;
+  height: 100%;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+@media only screen and (max-width: 600px) {
+  .container-signUp {
+    width: 100%;
+  }
+  .box {
+    padding: 10px;
+    border: 10px solid #c5d8a4;
+  }
+}
