@@ -7,15 +7,27 @@
         <div class="field">
           <label class="label">ชื่อ - นามสกุล </label>
           <div class="control">
-            <input class="input" type="text" placeholder="ตัวอย่าง สมชาย มะนาวดอง" v-model="name" />
+            <input
+              class="input"
+              type="text"
+              placeholder="ตัวอย่าง สมชาย มะนาวดอง"
+              v-model="name"
+              required
+            />
           </div>
         </div>
 
         <div class="field">
           <label class="label">ชื่อผู้ใช้</label>
           <div class="control has-icons-left has-icons-right">
-            <input class="input is-success" type="text" placeholder="ตัวอย่าง somchai3310" v-model="username"
-              id="name" />
+            <input
+              class="input is-success"
+              type="text"
+              placeholder="ตัวอย่าง somchai3310"
+              v-model="username"
+              id="name"
+              required
+            />
             <span class="icon is-small is-left">
               <i class="fas fa-user"></i>
             </span>
@@ -28,7 +40,13 @@
         <div class="field">
           <label class="label">รหัสผ่าน</label>
           <div class="control has-icons-left has-icons-right">
-            <input class="input" type="password" placeholder="Text input" v-model="password" />
+            <input
+              class="input"
+              type="password"
+              placeholder="*******"
+              v-model="password"
+              required
+            />
             <span class="icon is-small is-left">
               <i class="fas fa-user"></i>
             </span>
@@ -40,13 +58,26 @@
         <div class="field">
           <label class="label">เบอร์โทรศัพท์</label>
           <div class="control">
-            <input class="input" type="varchar" placeholder="ตัวอย่าง 098xxxxxxx" id="phone" v-model="phone" />
+            <input
+              class="input"
+              type="varchar"
+              placeholder="ตัวอย่าง 098xxxxxxx"
+              id="phone"
+              v-model="phone"
+              required
+            />
           </div>
         </div>
         <div class="field">
           <label class="label">อีเมล</label>
           <div class="control has-icons-left has-icons-right">
-            <input class="input" type="email" placeholder="ตัวอย่าง somchai1234@gmail.com" v-model="email" />
+            <input
+              class="input"
+              type="email"
+              placeholder="ตัวอย่าง somchai1234@gmail.com"
+              v-model="email"
+              required
+            />
             <span class="icon is-small is-left">
               <i class="fas fa-envelope"></i>
             </span>
@@ -80,10 +111,22 @@
         </div>
         <div class="field is-grouped">
           <div class="control">
-            <button class="button is-link" @click="submit()">Submit</button>
+            <button
+              class="button"
+              style="background-color: #e9efc0"
+              @click="submit()"
+            >
+              สมัคร
+            </button>
           </div>
           <div class="control">
-            <button class="button is-link is-light">Cancel</button>
+            <button
+              class="button is-light"
+              style="background-color: #e9efc0"
+              @click="cancel()"
+            >
+              ยกเลิก
+            </button>
           </div>
         </div>
       </div>
@@ -91,8 +134,14 @@
   </container>
 </template>
 <script>
-import axios from '@/plugins/axios'
+import axios from "axios";
+import useVuelidate from "../../node_modules/@vuelidate/core";
+import { required, email } from "../../node_modules/@vuelidate/validators";
+
 export default {
+  setup() {
+    return { v$: useVuelidate() };
+  },
   data() {
     return {
       name: "",
@@ -101,33 +150,47 @@ export default {
       email: "",
       sex: "",
       phone: "",
-      date: ""
-    }
+      date: "",
+    };
   },
   methods: {
     submit() {
-      // Validate all fields
+      this.v$.$validate()
 
-      // เช็คว่าในฟอร์มไม่มี error
-      let value = {
+      if(this.v$.$error) {
+        console.log('test')
+        return alert("8;p")
+      }
+
+      let data = {
         name: this.name,
         username: this.username,
         password: this.password,
         email: this.email,
         sex: this.sex,
         phone: this.phone,
-        date: this.date
+        date: this.date,
       };
       axios
-        .post("http://localhost:5000/user/signup", value)
+        .post("http://localhost:5000/user/signup", data)
         .then((res) => {
           alert("Sign up Success !!");
-          this.$router.push("/")
+          this.$router.push("/");
         })
         .catch((err) => {
-          alert(err)
+          alert(err);
         });
     },
+    cancel() {
+      this.$router.push("/");
+    },
+  },
+  validations() {
+    return {
+      name: {required},
+      password: {required},
+      email: { required, email }, // Matches this.contact.email
+    };
   },
 };
 </script>

@@ -38,7 +38,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
 
       <div class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item"> หน้าแรก </a>
+          <a class="navbar-item" st href="/"> หน้าแรก </a>
 
           <a class="navbar-item"> มาใหม่ </a>
 
@@ -60,15 +60,14 @@ import HelloWorld from '@/components/HelloWorld.vue'
               <a class="button" style="background-color:#E9EFC0;" st href="/signUp">
               Sign up
               </a>
-              <a class="button" style="background-color:#percent;"> Log in </a>
+              <a class="button" style="background-color:#percent;" st href="/login"> Log in </a>
             </div>
           </div>
         </div>
       </div>
     </nav>
   </div>
-  
-  <router-view :key="$route.fullPath" @auth-change="onAuthChange" />
+  <RouterView />
   </div>
 </template>
 
@@ -93,32 +92,3 @@ a.navbar-item:hover {
   background-color: #BB9981;
 }
 </style>
-<script>
- import axios from '@/plugins/axios'
- 
- export default {
-   data () {
-     return {
-       user: null
-     }
-   },
-   mounted () {
-     this.onAuthChange()
-   },
-   methods: {
-     onAuthChange () {
-       console.log("dwadd")
-       const token = localStorage.getItem('token')
-       if (token) {
-         this.getUser()
-       }
-     },
-     getUser () {
-       const token = localStorage.getItem('token')
-       axios.get('/user/me').then(res => {
-         this.user = res.data
-       })
-     },
-   }
- }
- </script>

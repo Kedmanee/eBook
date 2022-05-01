@@ -27,6 +27,13 @@ body {
 html {
   background-color: transparent;
 }
+.box2 {
+  background-color: #f4fcd9;
+  border: 100px;
+  padding: 100px;
+  margin: 20px;
+  border-radius: 50px 20px;
+}
 
 .content>* {
   color: #534340 !important;
@@ -52,4 +59,11 @@ html {
     padding: 10px;
     border: 10px solid #c5d8a4;
   }
+  .box2 {
+  background-color: #f4fcd9;
+  border: 100px;
+  padding: 100px;
+  margin: 20px;
+  border-radius: 50px 20px;
+}
 }
