@@ -133,7 +133,7 @@
   </container>
 </template>
 <script>
-import axios from "axios";
+import axios from '@/plugins/axios'
 import useVuelidate from "../../node_modules/@vuelidate/core";
 import { required, email } from "../../node_modules/@vuelidate/validators";
 
@@ -157,7 +157,6 @@ export default {
       this.v$.$validate()
 
       if(this.v$.$error) {
-        console.log('test')
         return alert("กรุณาใส่ข้อมูลให้ครบด้วยน้า")
       }
 
@@ -177,7 +176,9 @@ export default {
           this.$router.push("/");
         })
         .catch((err) => {
-          alert(err);
+          console.log("แพรสว")
+          console.log(err.response.data.err)
+          alert(err.response.data.err);
         });
     },
     cancel() {
@@ -186,9 +187,9 @@ export default {
   },
   validations() {
     return {
-      name: {required},
-      password: {required},
-      email: { required, email }, // Matches this.contact.email
+      // name: {required},
+      // password: {required},
+      // email: { required, email }, // Matches this.contact.email
     };
   },
 };
