@@ -91,7 +91,7 @@
   </container>
 </template>
 <script>
-import axios from "axios";
+import axios from '@/plugins/axios'
 export default {
   data() {
     return {
@@ -109,7 +109,7 @@ export default {
       // Validate all fields
 
       // เช็คว่าในฟอร์มไม่มี error
-      let data = {
+      let value = {
         name: this.name,
         username: this.username,
         password: this.password,
@@ -119,7 +119,7 @@ export default {
         date: this.date
       };
       axios
-        .post("http://localhost:5000/user/signup", data)
+        .post("http://localhost:5000/user/signup", value)
         .then((res) => {
           alert("Sign up Success !!");
           this.$router.push("/")

@@ -68,7 +68,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
     </nav>
   </div>
   
-  <RouterView />
+  <router-view :key="$route.fullPath" @auth-change="onAuthChange" />
   </div>
 </template>
 
@@ -93,3 +93,32 @@ a.navbar-item:hover {
   background-color: #BB9981;
 }
 </style>
+<script>
+ import axios from '@/plugins/axios'
+ 
+ export default {
+   data () {
+     return {
+       user: null
+     }
+   },
+   mounted () {
+     this.onAuthChange()
+   },
+   methods: {
+     onAuthChange () {
+       console.log("dwadd")
+       const token = localStorage.getItem('token')
+       if (token) {
+         this.getUser()
+       }
+     },
+     getUser () {
+       const token = localStorage.getItem('token')
+       axios.get('/user/me').then(res => {
+         this.user = res.data
+       })
+     },
+   }
+ }
+ </script>
