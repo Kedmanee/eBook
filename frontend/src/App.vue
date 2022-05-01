@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
 </script>
 
 <template >
+<div>
   <div id="app">
     <!-- nav bar -->
     <nav
@@ -66,7 +67,9 @@ import HelloWorld from '@/components/HelloWorld.vue'
       </div>
     </nav>
   </div>
+  
   <RouterView />
+  </div>
 </template>
 
 <style scoped>
