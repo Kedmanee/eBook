@@ -21,7 +21,7 @@
           <label class="label">ชื่อผู้ใช้</label>
           <div class="control has-icons-left has-icons-right">
             <input
-              class="input is-success"
+              class="input"
               type="text"
               placeholder="ตัวอย่าง somchai3310"
               v-model="username"
@@ -35,7 +35,6 @@
               <i class="fas fa-check"></i>
             </span>
           </div>
-          <p class="help is-success">ชื่อผู้ใช้สามารถใช้ได้</p>
         </div>
         <div class="field">
           <label class="label">รหัสผ่าน</label>
