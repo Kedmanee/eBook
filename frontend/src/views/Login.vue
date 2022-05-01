@@ -49,6 +49,9 @@
                   เข้าสู่ระบบ
                 </button>
               </div>
+              <div class="field">
+                <div>ยังไม่มีบัญชีผู้ใช้หรอ?</div><a st href="/signUp" style="color: #6A5ACD;">สมัครสมาชิกที่นี่</a>
+              </div>
             </form>
           </div>
         </div>

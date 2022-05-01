@@ -159,7 +159,7 @@ export default {
 
       if(this.v$.$error) {
         console.log('test')
-        return alert("8;p")
+        return alert("กรุณาใส่ข้อมูลให้ครบด้วยน้า")
       }
 
       let data = {
