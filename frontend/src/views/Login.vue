@@ -53,7 +53,7 @@
                 </label>
               </div>
               <div class="field">
-                <button class="button is-success" style="background-color:#E9EFC0;color: #534340;" @click="login()">
+                <button class="button is-success" style="background-color:#E9EFC0;color: #534340;">
                   เข้าสู่ระบบ
                 </button>
               </div>
@@ -69,32 +69,38 @@
 </template>
 
 <script>
-
-import axios from 'axios'
-
+import axios from '@/plugins/axios'
 export default {
-  methods: {
-    login() {
-       const data = {
-         username: this.username,
-         password: this.password,
-         error: ''
-       }
-      axios
-        .post("http://localhost:3000/login/", data)
-        .then((res) => {
-          const token = res.data.token;
-          localStorage.setItem("token", token);
-          this.$emit("auth-change");
-          this.$router.push({ path: "/" });
-        })
-        .catch((error) => {
-          this.error = error.response.data;
-          console.log(error.response.data);
-        });
-    },
+  data () {
+    return {
+      username: '',
+      password: '',
+      error: ''
+    }
   },
-};
+  methods: {
+     submit () {
+       console.log('test')
+      //  const data = {
+      //    username: this.username,
+      //    password: this.password
+      //  }
+ 
+      //  axios
+      //   .post('http://localhost:5000/user/login', data)
+      //    .then(res => {
+      //      const token = res.data.token                                
+      //      localStorage.setItem('token', token)
+      //      this.$emit('auth-change')
+      //     //  this.$router.push({path: '/'})
+      //    })
+      //    .catch(error => {
+      //      this.error = error.response.data
+      //      console.log(error.response.data)
+      //    })
+     }
+   }
+}
 </script>
 
 <style scoped>

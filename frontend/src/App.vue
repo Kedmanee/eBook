@@ -57,10 +57,10 @@ import HelloWorld from '@/components/HelloWorld.vue'
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button" style="background-color:#E9EFC0;" st href="/signUp">
+              <a class="button" style="background-color:#E9EFC0;" href="/signUp">
               Sign up
               </a>
-              <a class="button" style="background-color:#percent;"> Log in </a>
+              <a class="button" style="background-color:#percent; " href="/login"> Log in </a>
             </div>
           </div>
         </div>
