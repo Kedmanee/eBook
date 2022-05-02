@@ -70,7 +70,15 @@
         <div class="control">
           <label class="checkbox">
             <input v-model="type" type="checkbox" />
-            นวนิยาย
+            นิยายแปล
+          </label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <label class="checkbox">
+            <input v-model="type" type="checkbox" />
+            หนังสือเด็ก
           </label>
         </div>
       </div>

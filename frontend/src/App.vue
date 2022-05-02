@@ -48,7 +48,8 @@ import HelloWorld from '@/components/HelloWorld.vue'
             <div class="navbar-dropdown">
               <a class="navbar-item"> มังงะ </a>
               <a class="navbar-item"> นิยาย </a>
-              <a class="navbar-item"> นวนิยาย </a>
+              <a class="navbar-item"> นิยายแปล </a>
+              <a class="navbar-item"> หนังสือเด็ก </a>
               <hr class="navbar-divider" />
               <a class="navbar-item"> ทั้งหมด </a>
             </div>
