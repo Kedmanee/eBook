@@ -7,16 +7,21 @@
       <div class="container">
         <div class="columns is-centered">
           <div>
-            <form action="" class="box content">
+            <form class="box content">
               <h1>ลงชื่อเข้าใช้</h1>
 
               <p
-          v-if="error"
-          class="px-3 py-2 mb-3 has-text-danger-dark has-background-danger-light"
-        >
-          {{ error }}
-        </p>
-              
+                v-if="error"
+                class="
+                  px-3
+                  py-2
+                  mb-3
+                  has-text-danger-dark has-background-danger-light
+                "
+              >
+                {{ error }}
+              </p>
+
               <div class="field">
                 <label for="" class="label">ชื่อผู้ใช้</label>
                 <div class="control has-icons-left">
@@ -53,7 +58,12 @@
                 </label>
               </div>
               <div class="field">
-                <button class="button is-success" style="background-color:#E9EFC0;color: #534340;">
+                <button
+                  class="button is-success"
+                  style="background-color: #e9efc0; color: #534340"
+                  type="button"
+                  @click="submit"
+                >
                   เข้าสู่ระบบ
                 </button>
               </div>
@@ -69,38 +79,38 @@
 </template>
 
 <script>
-import axios from '@/plugins/axios'
+import axios from "@/plugins/axios";
 export default {
-  data () {
+  data() {
     return {
-      username: '',
-      password: '',
-      error: ''
-    }
+      username: "",
+      password: "",
+      error: "",
+    };
   },
   methods: {
-     submit () {
-       console.log('test')
-      //  const data = {
-      //    username: this.username,
-      //    password: this.password
-      //  }
- 
-      //  axios
-      //   .post('http://localhost:5000/user/login', data)
-      //    .then(res => {
-      //      const token = res.data.token                                
-      //      localStorage.setItem('token', token)
-      //      this.$emit('auth-change')
-      //     //  this.$router.push({path: '/'})
-      //    })
-      //    .catch(error => {
-      //      this.error = error.response.data
-      //      console.log(error.response.data)
-      //    })
-     }
-   }
-}
+    submit() {
+      console.log("test");
+       const data = {
+         username: this.username,
+         password: this.password
+       }
+
+       axios
+        .post('http://localhost:5000/user/login', data)
+         .then(res => {
+           const token = res.data.token
+           localStorage.setItem('token', token)
+           this.$emit('auth-change')
+           this.$router.push({path: '/'})
+         })
+         .catch(error => {
+           this.error = error.response.data
+           console.log(error.response.data)
+         })
+    },
+  },
+};
 </script>
 
 <style scoped>
