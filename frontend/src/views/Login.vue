@@ -9,9 +9,14 @@
           <div>
             <form action="" class="box content">
               <h1>ลงชื่อเข้าใช้</h1>
-              <p v-if="error" class="px-3 py-2 mb-3 has-text-danger-dark has-background-danger">
-                {{error}}
-              </p>
+
+              <p
+          v-if="error"
+          class="px-3 py-2 mb-3 has-text-danger-dark has-background-danger-light"
+        >
+          {{ error }}
+        </p>
+              
               <div class="field">
                 <label for="" class="label">ชื่อผู้ใช้</label>
                 <div class="control has-icons-left">
@@ -72,7 +77,8 @@ export default {
     login() {
        const data = {
          username: this.username,
-         password: this.password
+         password: this.password,
+         error: ''
        }
       axios
         .post("http://localhost:3000/login/", data)
