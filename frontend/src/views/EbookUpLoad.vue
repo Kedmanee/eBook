@@ -91,7 +91,7 @@
 
       <div class="field is-grouped">
         <div class="control">
-          <button @click="submitBlog" class="button is-link">เพิ่มหนังสือ</button>
+          <button @click="submit" class="button is-link">เพิ่มหนังสือ</button>
         </div>
         <div class="control">
           <button @click="$router.go(-1)" class="button is-link is-light">ยกเลิก</button>
@@ -119,25 +119,25 @@ export default {
       this.images = event.target.files;
     },
     showSelectImage(image) {
-      // for preview only
+      
       return URL.createObjectURL(image);
     },
     deleteSelectImage(index) {
-      console.log(this.images);
       this.images = Array.from(this.images);
       this.images.splice(index, 1);
     },
-    submitBlog() {
+    submit() {
       let formData = new FormData();
       formData.append("title", this.title);
       formData.append("author", this.author);
       formData.append("synopsis", this.synopsis);
       formData.append("type", this.type);
       this.images.forEach((image) => {
+        console.log(image);
         formData.append("myImage", image);
       });
       axios
-        .post("http://localhost:3000/Ebook/Upload", formData)
+        .post("http://localhost:5000/ebook/upload", formData)
         .then((res) => this.$router.push({name: 'home'}))
         .catch((e) => console.log(e.response.data));
     },
