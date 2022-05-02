@@ -39,14 +39,20 @@
       <div class="field mt-5">
         <label class="label">ชื่อเรื่อง</label>
         <div class="control">
-          <input v-model="title" class="input" type="text" placeholder="Text input" />
+          <input v-model="title" class="input" type="text"/>
         </div>
       </div>
 
       <div class="field">
         <label class="label">เรื่องย่อ</label>
         <div class="control">
-          <textarea v-model="synopsis" class="textarea" placeholder="Textarea"></textarea>
+          <textarea v-model="synopsis" class="textarea"></textarea>
+        </div>
+      </div>
+      <div class="field mt-5">
+        <label class="label">ผู้แต่ง</label>
+        <div class="control">
+          <input v-model="author" class="input" type="text"/>
         </div>
       </div>
       <label class="label"> ประเภทหนังสือ</label>
@@ -107,6 +113,7 @@ export default {
       title: "",
       synopsis: "",
       pinnedBlog: false,
+      author: "",
       statusBlog: "01",
     };
   },
