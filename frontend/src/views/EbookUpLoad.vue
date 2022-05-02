@@ -107,14 +107,11 @@ import axios from "axios";
 export default {
   data() {
     return {
-      blog: {},
-      error: null,
       images: [], // array of image
       title: "",
       synopsis: "",
-      pinnedBlog: false,
+      type: "1",
       author: "",
-      statusBlog: "01",
     };
   },
   methods: {
@@ -132,30 +129,15 @@ export default {
     },
     submitBlog() {
       let formData = new FormData();
-      formData.append("title", this.titleBlog);
-      formData.append("content", this.contentBlog);
-      formData.append("pinned", this.pinnedBlog ? 1 : 0);
-      formData.append("status", "01");
+      formData.append("title", this.title);
+      formData.append("author", this.author);
+      formData.append("synopsis", this.synopsis);
+      formData.append("type", this.type);
       this.images.forEach((image) => {
         formData.append("myImage", image);
       });
-
-      // Note ***************
-      // ตอนเรายิง Postmant จะใช้ fromData
-      // ตอนยิงหลาย ๆ รูปพร้อมกันใน Postman จะเป็นแบบนี้
-
-      // title   | "This is a title of blog"
-      // comment | "comment in blog"
-      // ...
-      // myImage | [select file 1]
-      // myImage | [select file 2]
-      // myImage | [select file 3]
-
-      // จะสังเกตุว่าใช้ myImage เป็น key เดียวกัน เลยต้องเอามา loop forEach
-      // พอไปฝั่ง backend มันจะจัด file ให้เป็น Array เพื่อเอาไปใช้งานต่อได้
-
       axios
-        .post("http://localhost:3000/blogs", formData)
+        .post("http://localhost:3000/Ebook/Upload", formData)
         .then((res) => this.$router.push({name: 'home'}))
         .catch((e) => console.log(e.response.data));
     },
