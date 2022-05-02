@@ -132,12 +132,14 @@ export default {
       formData.append("author", this.author);
       formData.append("synopsis", this.synopsis);
       formData.append("type", this.type);
-      this.images.forEach((image) => {
-        console.log(image);
-        formData.append("myImage", image);
-      });
+      console.log(this.images[0])
+      formData.append("myImage", this.images[0]);
       axios
-        .post("http://localhost:5000/ebook/upload", formData)
+          .post("http://localhost:5000/ebook/upload", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+    })
         .then((res) => this.$router.push({name: 'home'}))
         .catch((e) => console.log(e.response.data));
     },

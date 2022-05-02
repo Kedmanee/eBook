@@ -51,18 +51,14 @@ const upload = multer({ storage: storage });
 //   }
 // });
 
-router.post(
-  "/ebook/upload",
-  upload.array("myImage", 5),
-  async function (req, res, next) {
-    if (req.method == "POST") {
-      const file = req.files;
+router.post("/ebook/upload", upload.single("myImage"), async (req, res, next) => {
+      const file = req.file;
+      console.log(req.file)
       let pathArray = [];
 
       if (!file) {
         return res.status(400).json({ message: "Please upload a file" });
       }
-
       console.log(req.body)
       const title = req.body.title;
       const price = req.body.price;
@@ -75,10 +71,10 @@ router.post(
       await conn.beginTransaction();
 
       try {
-        let results = await conn.query(
-          "INSERT INTO e_book(title, price, book_type_id, synopsis, imageOfEbook) VALUES(?, ?, ?, ?, ?);",
-          [title, price, book_type_id, synopsis,imageOfEbook]
-        );
+        // let results = await conn.query(
+        //   "INSERT INTO e_book(title, price, book_type_id, synopsis, imageOfEbook) VALUES(?, ?, ?, ?, ?);",
+        //   [title, price, book_type_id, synopsis,imageOfEbook]
+        // );
         const blogId = results[0].insertId;
 
         req.files.forEach((file, index) => {
@@ -101,7 +97,7 @@ router.post(
         console.log("finally");
         conn.release();
       }
-    }
+    
   }
 );
 

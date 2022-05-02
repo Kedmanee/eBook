@@ -16,7 +16,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
       height="300"
     >
       <div class="navbar-brand">
-        <a class="navbar-item">
+        <a class="navbar-item" href="/">
           <img
             src="https://media.discordapp.net/attachments/727925890989817947/969683763044962304/IMG_3599.png?width=670&height=670"
             style="height: 100%; aspect-ratio: 1/1;"
@@ -38,7 +38,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
 
       <div class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item"> หน้าแรก </a>
+          <a class="navbar-item" href="/"> หน้าแรก </a>
 
           <a class="navbar-item"> มาใหม่ </a>
 
@@ -56,7 +56,8 @@ import HelloWorld from '@/components/HelloWorld.vue'
           </div>
         </div>
         <div class="navbar-end">
-          <div class="navbar-item">
+          <a class="navbar-item"> ตระกร้า </a>
+          <div class="navbar-item">                     
             <div class="buttons">
               <a class="button" style="background-color:#E9EFC0;" href="/signUp">
               Sign up
@@ -64,6 +65,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
               <a class="button" style="background-color:#percent; " href="/login"> Log in </a>
             </div>
           </div>
+          
         </div>
       </div>
     </nav>
