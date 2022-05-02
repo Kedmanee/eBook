@@ -2,11 +2,13 @@ const express = require("express");
 const path = require("path");
 const pool = require("../config");
 const fs = require("fs");
+const Joi = require('joi')
 
 router = express.Router();
 
 // Require multer for file upload
 const multer = require("multer");
+const console = require("console");
 // SET STORAGE
 var storage = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -50,43 +52,59 @@ const upload = multer({ storage: storage });
 //     conn.release();
 //   }
 // });
+const signupSchema = Joi.object({
+  title: Joi.string().min(5).max(100),
+  price: Joi.number(),
+  author: Joi.string().min(2).max(100),
+  synopsis:  Joi.string().min(5).max(300),
+}).unknown(); 
 
 router.post("/ebook/upload", upload.single("myImage"), async (req, res, next) => {
       const file = req.file;
-      console.log(req.file)
-      let pathArray = [];
-
+ 
       if (!file) {
         return res.status(400).json({ message: "Please upload a file" });
       }
-      console.log(req.body)
+      try {
+        const value = await signupSchema.validateAsync(req.body, { abortEarly: false });
+    } catch (err) {
+        console.log(err.details[0].message)
+        return res.status(400).send({
+            err: err.details[0].message
+        })
+    }
       const title = req.body.title;
       const price = req.body.price;
-      const book_type_id = req.body.book_type_id;
+      const book_type_id = req.body.type;
+      const author = req.body.author;
       const synopsis = req.body.synopsis;
-      const imageOfEbook = req.body.imageOfEbook;
+      const imageOfEbook = file.path;
+      
 
       const conn = await pool.getConnection();
       // Begin transaction
       await conn.beginTransaction();
 
       try {
-        // let results = await conn.query(
-        //   "INSERT INTO e_book(title, price, book_type_id, synopsis, imageOfEbook) VALUES(?, ?, ?, ?, ?);",
-        //   [title, price, book_type_id, synopsis,imageOfEbook]
-        // );
-        const blogId = results[0].insertId;
+        const authorlist = await conn.query("SELECT * FROM author WHERE author_name=?",[author]);
+        let authorid=0
+        if (authorlist[0].length>0){
+          console.log("Jame")
+          authorid = authorlist[0][0].author_id
+          console.log(authorid)
+        }
+        else{
 
-        req.files.forEach((file, index) => {
-          let path = [blogId, file.path.substring(6), index == 0 ? 1 : 0];
-          pathArray.push(path);
-        });
-        console.log(pathArray)
+          const authorinsert = await conn.query("INSERT INTO author(author_name) VALUES(?);",[author]);
 
-        // await conn.query(
-        //   "INSERT INTO images(blog_id, file_path, main) VALUES ?;",
-        //   [pathArray]
-        // );
+          authorid = authorinsert[0].insertId;
+        }
+        console.log(authorid)
+        const results = await conn.query(
+          "INSERT INTO e_book(title, price, book_type_id, synopsis, imageOfEbook,author_id) VALUES(?, ?, ?, ?, ?,?);",
+          [title, price, book_type_id, synopsis,imageOfEbook,authorid]
+        );
+        const bookid = results[0].insertId;
 
         await conn.commit();
         res.send("success!");

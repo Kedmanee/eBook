@@ -109,7 +109,6 @@ import axios from '@/plugins/axios'
    },
    methods: {
      onAuthChange () {
-       console.log("dwadd")
        const token = localStorage.getItem('token')
        if (token) {
          this.getUser()

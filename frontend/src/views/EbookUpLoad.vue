@@ -55,6 +55,12 @@
           <input v-model="author" class="input" type="text"/>
         </div>
       </div>
+      <div class="field mt-5">
+        <label class="label">ราคา</label>
+        <div class="control">
+          <input v-model="price" class="input" type="text"/>
+        </div>
+      </div>
       <label class="label"> ประเภทหนังสือ</label>
       <div class="field">
         <div class="control">
@@ -112,6 +118,7 @@ export default {
       synopsis: "",
       type: "1",
       author: "",
+      price:0,
     };
   },
   methods: {
@@ -132,6 +139,7 @@ export default {
       formData.append("author", this.author);
       formData.append("synopsis", this.synopsis);
       formData.append("type", this.type);
+      formData.append("price", this.price);
       console.log(this.images[0])
       formData.append("myImage", this.images[0]);
       axios
@@ -141,7 +149,10 @@ export default {
         }
     })
         .then((res) => this.$router.push({name: 'home'}))
-        .catch((e) => console.log(e.response.data));
+        .catch(
+          (e) => alert(e.response.data.err)
+          
+          );
     },
   },
 };
