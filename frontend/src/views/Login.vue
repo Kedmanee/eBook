@@ -9,6 +9,9 @@
           <div>
             <form action="" class="box content">
               <h1>ลงชื่อเข้าใช้</h1>
+              <p v-if="error" class="px-3 py-2 mb-3 has-text-danger-dark has-background-danger">
+                {{error}}
+              </p>
               <div class="field">
                 <label for="" class="label">ชื่อผู้ใช้</label>
                 <div class="control has-icons-left">
