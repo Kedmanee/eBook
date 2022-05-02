@@ -9,7 +9,7 @@
     </section>
     <section class="hero">
       <div class="hero-body">
-        <p class="title">Create new Blog</p>
+        <p class="title">Upload</p>
       </div>
     </section>
     <section class="px-6">
@@ -39,45 +39,45 @@
       <div class="field mt-5">
         <label class="label">ชื่อเรื่อง</label>
         <div class="control">
-          <input v-model="titleBlog" class="input" type="text" placeholder="Text input" />
+          <input v-model="title" class="input" type="text" placeholder="Text input" />
         </div>
       </div>
 
       <div class="field">
         <label class="label">เรื่องย่อ</label>
         <div class="control">
-          <textarea v-model="contentBlog" class="textarea" placeholder="Textarea"></textarea>
+          <textarea v-model="synopsis" class="textarea" placeholder="Textarea"></textarea>
         </div>
       </div>
       <label class="label"> ประเภทหนังสือ</label>
       <div class="field">
         <div class="control">
-          <label class="checkbox">
-            <input v-model="type" type="checkbox" />
+          <label class="radio">
+            <input name="type" v-model="type" type="radio" value="1" />
             มังงะ
           </label>
         </div>
       </div>
       <div class="field">
         <div class="control">
-          <label class="checkbox">
-            <input v-model="type" type="checkbox" />
+          <label class="radio">
+            <input name="type" v-model="type" type="radio" value="2"/>
             นิยาย
           </label>
         </div>
       </div>
       <div class="field">
         <div class="control">
-          <label class="checkbox">
-            <input v-model="type" type="checkbox" />
+          <label class="radio">
+            <input name="type" v-model="type" type="radio" value="3"/>
             นิยายแปล
           </label>
         </div>
       </div>
       <div class="field">
         <div class="control">
-          <label class="checkbox">
-            <input v-model="type" type="checkbox" />
+          <label class="radio">
+            <input name="type" v-model="type" type="radio" value="4"/>
             หนังสือเด็ก
           </label>
         </div>
@@ -85,10 +85,10 @@
 
       <div class="field is-grouped">
         <div class="control">
-          <button @click="submitBlog" class="button is-link">Submit</button>
+          <button @click="submitBlog" class="button is-link">เพิ่มหนังสือ</button>
         </div>
         <div class="control">
-          <button @click="$router.go(-1)" class="button is-link is-light">Cancel</button>
+          <button @click="$router.go(-1)" class="button is-link is-light">ยกเลิก</button>
         </div>
       </div>
     </section>
@@ -104,8 +104,8 @@ export default {
       blog: {},
       error: null,
       images: [], // array of image
-      titleBlog: "",
-      contentBlog: "",
+      title: "",
+      synopsis: "",
       pinnedBlog: false,
       statusBlog: "01",
     };
