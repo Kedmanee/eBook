@@ -84,7 +84,7 @@ router.post("/ebook/upload", isLoggedIn, isAdmin, upload.single("myImage"), asyn
       const imageOfEbook = file.path;
       
 
-      const conn = await pool.getConnection();
+      const conn = await pool.Connection();
       // Begin transaction
       await conn.beginTransaction();
 
