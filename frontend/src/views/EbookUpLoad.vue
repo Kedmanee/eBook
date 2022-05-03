@@ -143,6 +143,7 @@ export default {
       console.log(this.images[0])
       formData.append("myImage", this.images[0]);
       axios
+      console.log(e_book)
           .post("http://localhost:5000/ebook/upload", formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
