@@ -19,6 +19,7 @@ const router = createRouter({
     {
       path: '/signUp',
       name: 'signUp',
+      meta: { guest: true },
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -27,6 +28,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
+      meta: { guest: true },
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -35,12 +37,30 @@ const router = createRouter({
     {
       path: '/upload',
       name: 'upload',
+      meta: { login: true },
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/EbookUpLoad.vue')
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = !!localStorage.getItem('token')
+
+  if (to.meta.login && !isLoggedIn) {
+    alert('Please login first!')
+    next({ path: '/login' })
+  }
+
+  if (to.meta.guest && isLoggedIn) {
+    alert("You've already logged in")
+    next({ path: '/' })
+  }
+
+
+  next()
 })
 
 export default router

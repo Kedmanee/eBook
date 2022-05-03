@@ -176,8 +176,7 @@ export default {
           this.$router.push("/");
         })
         .catch((err) => {
-          console.log(err.response.data.err)
-          alert(err.response.data.err);
+          alert(err.response.data);
         });
     },
     cancel() {

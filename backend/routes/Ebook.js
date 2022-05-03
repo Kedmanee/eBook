@@ -3,12 +3,15 @@ const path = require("path");
 const pool = require("../config");
 const fs = require("fs");
 const Joi = require('joi')
+const { isLoggedIn } = require('../middlewares')
+const { isAdmin } = require('../middlewares')
 
 router = express.Router();
 
+
+
 // Require multer for file upload
 const multer = require("multer");
-const console = require("console");
 // SET STORAGE
 var storage = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -59,7 +62,7 @@ const signupSchema = Joi.object({
   synopsis:  Joi.string().min(5).max(300),
 }).unknown(); 
 
-router.post("/ebook/upload", upload.single("myImage"), async (req, res, next) => {
+router.post("/ebook/upload", isLoggedIn, isAdmin, upload.single("myImage"), async (req, res, next) => {
       const file = req.file;
  
       if (!file) {

@@ -108,7 +108,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from '@/plugins/axios'
 
 export default {
   data() {
@@ -143,16 +143,14 @@ export default {
       console.log(this.images[0])
       formData.append("myImage", this.images[0]);
       axios
-          .post("http://localhost:5000/ebook/upload", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-    })
-        .then((res) => this.$router.push({name: 'home'}))
-        .catch(
-          (e) => alert(e.response.data.err)
-          
-          );
+        .post("http://localhost:5000/ebook/upload", formData)
+        .then((res) => {
+          this.$router.push("/");
+        })
+        .catch((err) => {
+          console.log('err')
+          alert(err.response.data);
+        });
     },
   },
 };

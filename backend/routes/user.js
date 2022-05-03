@@ -17,21 +17,18 @@ const passwordValidator = (value, helpers) => {
     return value
 }
 
-const usernameValidator = async  (value, helpers) => {
-
+const usernameValidator = async (value, helpers) => {
     const [rows, _] = await pool.query("SELECT username FROM customer WHERE username = ?", [value])
-    console.log(rows[0])
-    if (rows[0].length > 0) {
-        const message = 'This user is already taken'
+    if (rows.length > 0) {
+        const message = 'This username is already taken'
         throw new Joi.ValidationError(message, { message })
-
     }
     return value
 }
 
 const signupSchema = Joi.object({
     name: Joi.string(),
-    username: Joi.string().min(5).max(20).custom(usernameValidator),
+    username: Joi.string().required().min(5).max(20).external(usernameValidator),
     password: Joi.string().custom(passwordValidator),
     phone:  Joi.string().pattern(/0[0-9]{9}/),
     email:  Joi.string(),
@@ -45,10 +42,11 @@ router.post('/user/signup', async (req, res, next) => {
     try {
         const value = await signupSchema.validateAsync(req.body, { abortEarly: false });
     } catch (err) {
-        console.log(err)
-        return res.status(400).send({
-            err: err.details[0].message
-        })
+        if (err.details[0] === undefined) {
+            return res.status(400).send(err.details.message)
+        }
+
+        return res.status(400).send(err.details[0].message)
     }
 
     const conn = await pool.getConnection()
@@ -96,23 +94,33 @@ const loginSchema = Joi.object({
              'SELECT * FROM customer WHERE username=?', 
              [username]
          )
-         const user = users[0]
-         if (!user) {    
+         let user = users[0]
+         if(users[0] === undefined){
+             
+            const [adminUser] = await conn.query(
+                'SELECT * FROM admin WHERE username=?', 
+                [username])
+                
+            user = adminUser[0]
+         }
+
+        
+         if (!user) {
              throw new Error('Incorrect username or password')
          }
- 
-         // Check if password is correct
+             // Check if password is correct
          if (!(await bcrypt.compare(password, user.password))) {
              throw new Error('Incorrect username or password')
          }
-        
+         let token =""
          // Check if token already existed
-         const [tokens] = await conn.query(
+         if (user.grade){
+             const [tokens] = await conn.query(
              'SELECT * FROM tokens WHERE cus_id=?', 
              [user.customer_id]
          )
          
-         let token = tokens[0]?.token
+         token = tokens[0]?.token
          
          if (!token) {
              // Generate and save token into database
@@ -122,7 +130,26 @@ const loginSchema = Joi.object({
                  'INSERT INTO tokens(cus_id, token) VALUES (?, ?)', 
                  [user.customer_id, token]
              )
+         }}
+         else{
+            const [tokens] = await conn.query(
+                'SELECT * FROM tokens WHERE ad_id=?', 
+                [user.admin_id]
+            )
+            
+            token = tokens[0]?.token
+            
+            if (!token) {
+                // Generate and save token into database
+                token = generateToken()
+                console.log(token)
+                await conn.query(
+                    'INSERT INTO tokens(ad_id, token) VALUES (?, ?)', 
+                    [user.admin_id, token]
+                )
+            }
          }
+         
  
          conn.commit()
          res.status(200).json({'token': token})
@@ -137,7 +164,6 @@ const loginSchema = Joi.object({
 
  router.get('/user/me', isLoggedIn, async (req, res, next) => {
      // req.user ถูก save ข้อมูล user จาก database ใน middleware function "isLoggedIn"
-     console.log('test')
      res.json(req.user)
     })
 exports.router = router
