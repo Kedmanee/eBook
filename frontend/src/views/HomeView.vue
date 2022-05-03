@@ -56,7 +56,6 @@ export default {
   methods: {
     getBlogs() {
       axios
-
         .get("http://localhost:5000/eBook")
         .then((response) => {
           this.e_books = response.data;
@@ -74,9 +73,9 @@ export default {
       }
     },
     addToCart(eBook) {
-        // console.log(eBook)
+        console.log("ส่งละจ้า")
         axios
-        .pose("http://localhost:5000", {
+        .post("http://localhost:5000", {
           ebook:eBook
         })
         .catch((err) => {
