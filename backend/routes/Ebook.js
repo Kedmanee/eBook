@@ -122,69 +122,6 @@ router.post("/ebook/upload", isLoggedIn, isAdmin, upload.single("myImage"), asyn
   }
 );
 
-// Blog detail
-// router.get("/blogs/:id", function (req, res, next) {
-//   // Query data from 3 tables
-//   const promise1 = pool.query("SELECT * FROM blogs WHERE id=?", [
-//     req.params.id,
-//   ]);
-//   const promise2 = pool.query("SELECT * FROM comments WHERE blog_id=?", [
-//     req.params.id,
-//   ]);
-//   const promise3 = pool.query("SELECT * FROM images WHERE blog_id=?", [
-//     req.params.id,
-//   ]);
-
-//   // Use Promise.all() to make sure that all queries are successful
-//   Promise.all([promise1, promise2, promise3])
-//     .then((results) => {
-//       const [blogs, blogFields] = results[0];
-//       const [comments, commentFields] = results[1];
-//       const [images, imageFields] = results[2];
-//       comments.map(comments => {
-//         comments.editToggle = false
-//         comments.editCommentMessage = comments.comment
-//       });
-//       res.json({
-//         blog: blogs[0],
-//         images: images,
-//         comments: comments,
-//         error: null,
-//       });
-//     })
-//     .catch((err) => {
-//       return res.status(500).json(err);
-//     });
-// });
-
-// router.put("/blogs/:id", function (req, res) {
-//   // Your code here
-//   return;
-// });
-
-// router.delete("/blogs/:blogId", async function (req, res, next) {
-//   // Your code here
-//   const conn = await pool.getConnection();
-//   // Begin transaction
-//   await conn.beginTransaction();
-
-//   try {
-//     // Check that there is no comments
-//     const [
-//       rows1,
-//       fields1,
-//     ] = await conn.query(
-//       "SELECT COUNT(*) FROM `comments` WHERE `blog_id` = ?",
-//       [req.params.blogId]
-//     );
-//     console.log(rows1);
-
-//     if (rows1[0]["COUNT(*)"] > 0) {
-//       return res
-//         .status(400)
-//         .json({ message: "Cannot delete blogs with comments" });
-//     }
-
 //     //Delete files from the upload folder
 //     const [
 //       images,

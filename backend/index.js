@@ -17,10 +17,12 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 const userRouter = require('./routes/user')
 const ebookRouter = require('./routes/Ebook')
 const indexRouter = require('./routes/index')
+const cartRouter = require('./routes/cart')
 
 app.use(userRouter.router)
 app.use(ebookRouter.router)
 app.use(indexRouter.router)
+app.use(cartRouter.router)
 
 app.listen(5000, () => {
   console.log(`Example app listening at http://localhost:5000`)
