@@ -72,8 +72,8 @@ router.post("/ebook/upload", isLoggedIn, isAdmin, upload.single("myImage"), asyn
         const value = await signupSchema.validateAsync(req.body, { abortEarly: false });
     } catch (err) {
         console.log(err.details[0].message)
-        return res.status(400).send({
-            err: err.details[0].message
+        return res.status(400).json({
+          message: err.details[0].message
         })
     }
       const title = req.body.title;
@@ -84,7 +84,7 @@ router.post("/ebook/upload", isLoggedIn, isAdmin, upload.single("myImage"), asyn
       const imageOfEbook = file.path;
       
 
-      const conn = await pool.Connection();
+      const conn = await pool.getConnection();
       // Begin transaction
       await conn.beginTransaction();
 

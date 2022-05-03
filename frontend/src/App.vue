@@ -16,7 +16,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
               style="height: 100%; aspect-ratio: 1/1;" />
           </a>
 
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" @click="showNav = !showNav"
             data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -24,7 +24,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
           </a>
         </div>
 
-        <div class="navbar-menu">
+        <div class="navbar-menu" :class="{'is-active': showNav}">
           <div class="navbar-start">
             <a class="navbar-item" href="/"> หน้าแรก </a>
 
@@ -42,6 +42,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
                 <a class="navbar-item"> ทั้งหมด </a>
               </div>
             </div>
+            <a class="navbar-item" v-if="user && user.type == 'admin'" href="/upload"> เพิ่มหนังสือลงระบบ </a>
           </div>
           <div class="navbar-end" v-if="!user">
             <div class="navbar-item">
@@ -55,7 +56,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
 
           </div>
           <div class="navbar-end" v-else>
-            <a class="navbar-item"> ตระกร้า </a>
+            <a class="navbar-item "> <i class="fa fa-shopping-cart" aria-hidden="true"></i> </a>
             <a class="navbar-item">
               <div class="buttons">
                 <div class="button" style="background-color:#E9EFC0;" @click="logOut">
@@ -104,7 +105,8 @@ import axios from '@/plugins/axios'
 export default {
   data() {
     return {
-      user: null
+      user: null,
+      showNav: false,
     }
   },
   mounted() {

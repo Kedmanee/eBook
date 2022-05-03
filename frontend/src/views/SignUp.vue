@@ -173,7 +173,7 @@ export default {
         .post("http://localhost:5000/user/signup", data)
         .then((res) => {
           alert("Sign up Success !!");
-          this.$router.push("/");
+          this.$router.push("/login");
         })
         .catch((err) => {
           alert(err.response.data);

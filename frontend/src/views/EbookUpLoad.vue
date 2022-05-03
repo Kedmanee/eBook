@@ -1,5 +1,5 @@
 <template>
-  <div class="box2">
+  <div class="box2 content">
     <section class="section" v-if="error">
       <div class="container is-widescreen">
         <div class="notification is-danger">
@@ -9,7 +9,7 @@
     </section>
     <section class="hero">
       <div class="hero-body">
-        <p class="title">Upload</p>
+        <p class="title">เพิ่มหนังสือ</p>
       </div>
     </section>
     <section class="px-6">
@@ -149,7 +149,7 @@ export default {
         })
         .catch((err) => {
           console.log('err')
-          alert(err.response.data);
+          alert(err.response.data.message);
         });
     },
   },

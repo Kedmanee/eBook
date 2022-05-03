@@ -33,9 +33,9 @@ html {
 .box2 {
   background-color: #f4fcd9;
   border: 100px;
-  padding: 100px;
+  padding: 20px;
   margin: 20px;
-  border-radius: 50px 20px;
+  border-radius: 50px 0px;
 }
 
 .content>* {
@@ -63,18 +63,20 @@ html {
     border: 10px solid #c5d8a4;
   }
 
-  .box2 {
-    background-color: #f4fcd9;
-    border: 100px;
-    padding: 100px;
-    margin: 20px;
-    border-radius: 50px 20px;
-  }
-
   .box3 {
     background-color: #f4fcd9;
     border: 100px;
     padding: 100px;
     border-radius: 50px 20px;
   }
+  a.navbar-item {
+    cursor: pointer;
+    color: #F4FCD9;
+    background-color: #534340;
+}
+.navbar-link{
+    cursor: pointer;
+    color: #F4FCD9;
+    background-color: #534340;
+}
 }

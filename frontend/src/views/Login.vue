@@ -32,7 +32,7 @@
                     required
                   />
                   <span class="icon is-small is-left">
-                    <i class="fa fa-envelope"></i>
+                    <i class="fas fa-user"></i>
                   </span>
                 </div>
               </div>
