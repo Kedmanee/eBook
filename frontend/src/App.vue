@@ -56,7 +56,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
 
           </div>
           <div class="navbar-end" v-else>
-            <a class="navbar-item "> <i class="fa fa-shopping-cart" aria-hidden="true"></i> </a>
+            <a class="navbar-item " href="/cart"> <i class="fa fa-shopping-cart" aria-hidden="true"></i> </a>
             <a class="navbar-item">
               <div class="buttons">
                 <div class="button" style="background-color:#E9EFC0;" @click="logOut">

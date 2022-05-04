@@ -18,7 +18,17 @@
   margin: 20px;
   border-radius: 50px 20px;
 }
-
+.box3 {
+  background-color: #f4fcd9;
+  padding-left: 150px;
+  padding-top: 30px;
+  padding-right: 150px;
+  margin-right:300px;
+  margin-top:30px;
+  margin-left:300px;
+  border-radius: 50px 20px;
+  border: 10px solid #c5d8a4;
+}
 body {
   background-color: #BB9981;
   font-family: 'Kanit', sans-serif;

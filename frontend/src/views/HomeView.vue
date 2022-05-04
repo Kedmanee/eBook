@@ -1,49 +1,94 @@
 <template>
-  <main>
+  <div>
     <div class="box2 content">
-      <h1>หนังสือใหม่</h1>
+      <h1>e-book ของเรา♥</h1>
     </div>
-    <div class="columns is-multiline p-5">
-      <div class="column is-3" v-for="ebook in e_books" :key="ebook.eid">
-        <div class="card" style="width: 100%" @click="getEbook">
-          <div class="card-image">
-            <figure class="image">
-              <img
-                style="
-                  width: 100%;
-                  aspect-ratio: 1/1;
-                  object-fit: cover;
-                  object-position: top;
-                "
-                :src="imagePath(ebook.imageOfEbook)"
-                alt="Placeholder image"
-              />
-            </figure>
-          </div>
-          <div class="card-content" style="height: 300px">
-            <div class="title">{{ ebook.title }}</div>
-            <div class="content" style="word-break: break-all">
-              {{ ebook.author_name }}
-            </div>
-          </div>
-          <footer class="card-footer">
-            <a href="#" class="card-footer-item">Save</a>
-            <a @click="addToCart(ebook.eid )" class="card-footer-item">add to cart</a>
-            <a href="#" class="card-footer-item" 
-              >Delete</a
+    <div>
+      <div class="box3 is-max-desktop">
+        <div class="is-multiline columns is-variable is-2">
+          <!-- Card element start here------------------------------------------>
+            <div
+              id="card_product"
+              class="column is-one-quarter"
+              v-for="ebook in e_books"
+              :key="ebook.eid"
             >
-          </footer>
+              <div class="card">
+                <div class="card-image">
+                  <figure class="image">
+                    <img
+                      style="
+                        width: 100%;
+                        aspect-ratio: 1/1;
+                        object-fit: cover;
+                        object-position: top;
+                      "
+                      :src="imagePath(ebook.imageOfEbook)"
+                      alt="Placeholder image"
+                    />
+                  </figure>
+                </div>
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-content">
+                      <p class="title is-4">{{ ebook.title }}</p>
+                      <p class="subtitle is-6" style="color: gray">
+                        แต่งโดย {{ ebook.author_name }}
+                      </p>
+                      <p class="subtitle is-6">
+                        ประเภทหนังสือ
+                        {{ ebook.type_name }}
+                      </p>
+                      <p class="subtitle is-6; color: gray">
+                        ราคา {{ ebook.price }} บาท
+                      </p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between">
+                      <div class="icon is-size-4">
+                        <i
+                          class="fas fa-shopping-cart"
+                          style="color: #534340"
+                          @click="addToCart(ebook.eid)"
+                          v-if="user && user.type == 'customer'"
+                        ></i>
+                      </div>
+
+                      <div
+                        style="display: flex; justify-content: space-between"
+                      >
+                        <div class="icon is-size-4">
+                          <i
+                            class="fa fa-trash"
+                            v-if="user && user.type == 'admin'"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </template>
+
+<style>
+@media (min-width: 1024px) {
+  .about {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+}
+</style>
 <script>
 import axios from "@/plugins/axios";
 // @ is an alias to /src
 export default {
   name: "home",
-  props: ['user'],
+  props: ["user"],
   data() {
     return {
       search: "",
@@ -73,26 +118,22 @@ export default {
       }
     },
     addToCart(eBook) {
-        axios
+      axios
         .post(`http://localhost:5000/cart/add/${eBook}`, {
-          id:this.user.customer_id
+          id: this.user.customer_id,
         })
-        .then(res => {
-           alert("Add to cart success")
-         })
+        .then((res) => {
+          alert("Add to cart success");
+        })
         .catch((err) => {
-          alert(err.response.data)
+          alert(err.response.data);
         });
-
-
-      
     },
-    // shortContent(content) {
-    //   if (content.length > 200) {
-    //     return content.substring(0, 197) + "...";
-    //   }
-    //   return content;
-    // },
+    deleteEbook() {
+      const result = confirm(
+        `Are you sure you want to delete \'${this.eBook.title}\'`
+      );
+    },
   },
 };
 </script>
