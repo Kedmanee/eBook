@@ -133,6 +133,16 @@ export default {
       const result = confirm(
         `Are you sure you want to delete \'${this.eBook.title}\'`
       );
+      if (result){
+        axios
+        .delete(`http://localhost:5000/ebook/${this.eBook.eid}`)
+        .then((response) => {
+          this.$router.push('/')
+        })
+        .catch((error) => {
+          alert(error.response.data.message)
+        });
+      }
     },
   },
 };
