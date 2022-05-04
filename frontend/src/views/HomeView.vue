@@ -57,7 +57,7 @@
                         style="display: flex; justify-content: space-between"
                       >
                         <div class="icon is-size-4">
-                          <i
+                          <i @click="deleteEbook(ebook.eid)"
                             class="fa fa-trash"
                             v-if="user && user.type == 'admin'"
                           ></i>
@@ -129,14 +129,17 @@ export default {
           alert(err.response.data);
         });
     },
-    deleteEbook() {
+    deleteEbook(eBook) {
       const result = confirm(
         `Are you sure you want to delete \'${this.eBook.title}\'`
       );
       if (result){
         axios
-        .delete(`http://localhost:5000/ebook/${this.eBook.eid}`)
+        .delete(`http://localhost:5000/ebook/${eBook}`),{
+          id: this.eBook.eid,
+        }
         .then((response) => {
+          alert("Add to cart success");
           this.$router.push('/')
         })
         .catch((error) => {
