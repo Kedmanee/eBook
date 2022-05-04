@@ -122,6 +122,33 @@ router.post("/ebook/upload", isLoggedIn, isAdmin, upload.single("myImage"), asyn
   }
 );
 
+router.delete("/ebook/:id", isLoggedIn, isAdmin, async (req, res, next) => {
+  const conn = await pool.getConnection();
+      // Begin transaction
+  await conn.beginTransaction();
+  try {
+    console.log(req.params.id)
+    const results = await conn.query(
+      "DELETE FROM cart_item WHERE ebook_id = ?",
+      [req.params.id]
+    );
+    console.log(results)
+    const del = await conn.query("DELETE FROM e_book WHERE eid = ?",[req.params.id]);
+    await conn.commit();
+    res.send("success!");
+  } catch (err) {
+    await conn.rollback();
+    return res.status(400).json(err);
+  } finally {
+    console.log("finally");
+    conn.release();
+  }
+
+}
+
+
+);
+
 //     //Delete files from the upload folder
 //     const [
 //       images,

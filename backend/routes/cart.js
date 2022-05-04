@@ -13,14 +13,9 @@ router.post('/cart/add/:eid', async (req, res, next) => {
   // Begin transaction
   await conn.beginTransaction();
   try {
-    let [
-      rows,
-      fields,
-    ] = await conn.query("SELECT * FROM `e_book` WHERE `eid` = ?", [
+    let [rows,fields,] = await conn.query("SELECT * FROM `e_book` WHERE `eid` = ?", [
       req.params.eid,
     ]);
-
-
     let [total_price, fie] = await conn.query("SELECT `cart_id`,`total_price` FROM `cart` WHERE `customer_id` = ?", [
       req.body.id
     ]);
