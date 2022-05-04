@@ -122,12 +122,12 @@ export default {
     getUser() {
       axios.get('http://localhost:5000/user/me').then(res => {
         this.user = res.data
-        console.log(this.user)
       })
     },
     logOut(){
       localStorage.removeItem("token")
       this.user = null
+      this.$router.push("/");
     }
   }
 }

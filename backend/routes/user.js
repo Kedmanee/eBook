@@ -113,7 +113,6 @@ const loginSchema = Joi.object({
              throw new Error('Incorrect username or password')
          }
          let token =""
-         // Check if token already existed
          if (user.grade){
              const [tokens] = await conn.query(
              'SELECT * FROM tokens WHERE cus_id=?', 
@@ -123,7 +122,6 @@ const loginSchema = Joi.object({
          token = tokens[0]?.token
          
          if (!token) {
-             // Generate and save token into database
              token = generateToken()
              console.log(token)
              await conn.query(
@@ -140,9 +138,7 @@ const loginSchema = Joi.object({
             token = tokens[0]?.token
             
             if (!token) {
-                // Generate and save token into database
                 token = generateToken()
-                console.log(token)
                 await conn.query(
                     'INSERT INTO tokens(ad_id, token) VALUES (?, ?)', 
                     [user.admin_id, token]
@@ -161,9 +157,19 @@ const loginSchema = Joi.object({
      }
  })
 
+//show user
+router.get('/user/show', async (req, res, next) => {
+    try {
+      const [rows, fields] = await pool.query("SELECT * FROM customer WHERE customer_id = ?", req.body.id)
+      return res.json(rows);
+    }
+    catch (err) {
+      console.log("---------------")
+      return res.status(500).json(err)
+    }
+  })
 
  router.get('/user/me', isLoggedIn, async (req, res, next) => {
-     // req.user ถูก save ข้อมูล user จาก database ใน middleware function "isLoggedIn"
      res.json(req.user)
     })
 exports.router = router

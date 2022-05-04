@@ -28,7 +28,7 @@
           </div>
           <footer class="card-footer">
             <a href="#" class="card-footer-item">Save</a>
-            <a @click="addToCart(ebook )" class="card-footer-item">add to cart</a>
+            <a @click="addToCart(ebook.eid )" class="card-footer-item">add to cart</a>
             <a href="#" class="card-footer-item" 
               >Delete</a
             >
@@ -43,18 +43,18 @@ import axios from "@/plugins/axios";
 // @ is an alias to /src
 export default {
   name: "home",
+  props: ['user'],
   data() {
     return {
-      user: null,
       search: "",
       e_books: [],
     };
   },
   mounted() {
-    this.getBlogs();
+    this.getBook();
   },
   methods: {
-    getBlogs() {
+    getBook() {
       axios
         .get("http://localhost:5000/eBook")
         .then((response) => {
@@ -73,13 +73,15 @@ export default {
       }
     },
     addToCart(eBook) {
-        console.log("ส่งละจ้า")
         axios
-        .post("http://localhost:5000", {
-          ebook:eBook
+        .post(`http://localhost:5000/cart/add/${eBook}`, {
+          id:this.user.customer_id
         })
+        .then(res => {
+           alert("Add to cart success")
+         })
         .catch((err) => {
-          console.log(err);
+          alert(err.response.data)
         });
 
 
