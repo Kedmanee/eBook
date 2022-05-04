@@ -60,10 +60,9 @@ router.post('/cart/add/:eid', async (req, res, next) => {
 })
 
 //show cart
-router.get('/cart/show', async (req, res, next) => {
+router.get('/cart/show', isLoggedIn, async (req, res, next) => {
   try {
-
-    const [rows, fields] = await pool.query("SELECT * FROM cart_item natural JOIN cart JOIN e_book ON (eid = ebook_id) WHERE customer_id = ?", req.body.id)
+    const [rows, fields] = await pool.query("SELECT * FROM cart_item natural JOIN cart JOIN e_book ON (eid = ebook_id) WHERE customer_id = ?", req.user.customer_id)
     console.log(rows)
     return res.json(rows);
   }

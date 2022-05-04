@@ -25,7 +25,7 @@
         <div v-for="(image, index) in images" :key="image.id" class="column is-one-quarter">
           <div class="card">
             <div class="card-image">
-              <figure class="image is-4by3">
+              <figure class="image is-63x63">
                 <img :src="showSelectImage(image)" alt="Placeholder image" />
               </figure>
             </div>
