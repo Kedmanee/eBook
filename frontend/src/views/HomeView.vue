@@ -131,7 +131,7 @@ export default {
     },
     deleteEbook(eBook) {
       const result = confirm(
-        `Are you sure you want to delete \'${this.eBook.title}\'`
+        `Are you sure you want to delete`
       );
       if (result){
         axios
