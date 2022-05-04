@@ -131,16 +131,16 @@ export default {
     },
     deleteEbook(eBook) {
       const result = confirm(
-        `Are you sure you want to delete \'${this.eBook.title}\'`
+        `Are you sure you want to delete`
       );
       if (result){
         axios
-        .delete(`http://localhost:5000/ebook/${eBook}`),{
-          id: this.eBook.eid,
-        }
+        .delete(`http://localhost:5000/ebook/${eBook}`)
         .then((response) => {
-          alert("Add to cart success");
+          
+          alert("Delete success");
           this.$router.push('/')
+          
         })
         .catch((error) => {
           alert(error.response.data.message)

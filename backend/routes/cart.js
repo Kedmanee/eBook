@@ -13,14 +13,9 @@ router.post('/cart/add/:eid', async (req, res, next) => {
   // Begin transaction
   await conn.beginTransaction();
   try {
-    let [
-      rows,
-      fields,
-    ] = await conn.query("SELECT * FROM `e_book` WHERE `eid` = ?", [
+    let [rows,fields,] = await conn.query("SELECT * FROM `e_book` WHERE `eid` = ?", [
       req.params.eid,
     ]);
-
-
     let [total_price, fie] = await conn.query("SELECT `cart_id`,`total_price` FROM `cart` WHERE `customer_id` = ?", [
       req.body.id
     ]);
@@ -62,6 +57,10 @@ router.post('/cart/add/:eid', async (req, res, next) => {
 //show cart
 router.get('/cart/show', async (req, res, next) => {
   try {
+    const [cart, fields2] = await pool.query("SELECT cart_id FROM cart WHERE customer_id = ?;", req.body.id)
+    const [newsum, fields1] = await pool.query("SELECT SUM(unit_price) FROM cart_item WHERE cart_id = ?;", cart[0])
+
+    const [updatesum, fields3] = await pool.query("UPDATE cart SET total_price = ? customer_id = ?", req.body.id, newsum[0])
 
     const [rows, fields] = await pool.query("SELECT * FROM cart_item natural JOIN cart JOIN e_book ON (eid = ebook_id) WHERE customer_id = ?", req.body.id)
     console.log(rows)
