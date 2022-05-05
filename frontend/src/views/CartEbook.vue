@@ -31,7 +31,8 @@
             </div>
           </div>
         </div>
-        <h1 v-if="cart_items.length == 0" style="position: relative; top: 50%; transform: translateY(-50%);">ไม่มีไอควาย</h1>
+        <h1 v-if="cart_items.length == 0" style="position: relative; top: 50%; transform: translateY(-50%);">ยังไม่มี E-book เลย
+        </h1>
       </div>
       <div class="column is-5 box3 content m-0 ml-4 p-4" style="height:fit-content">
         <h1>ชำระเงิน♥</h1>
@@ -78,7 +79,7 @@ export default {
     this.getCart();
   },
   methods: {
-    async getBook() {
+    async getCart() {
       await axios
         .get(`http://localhost:5000/cart/show/${this.user.customer_id}`)
         .then((res) => {

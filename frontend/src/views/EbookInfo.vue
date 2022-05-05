@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="box2 content">
-    <h1>This is an about page</h1>
+    <h1>{{ebook[0].title}}</h1>
   </div>
   </div>
 </template>
@@ -26,8 +26,6 @@ export default {
         .get("http://localhost:5000/ebook")
         .then((res) => {
           this.ebook = res.data;
-          console.log(".............................................")
-          console.log(this.ebook)
         })
         .catch((err) => {
           alert(err.response.data.message);

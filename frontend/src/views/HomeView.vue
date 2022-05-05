@@ -13,8 +13,8 @@
               v-for="ebook in e_books"
               :key="ebook.eid"
             >
-              <div class="card" @click="showThisEbook()">
-                <div class="card-image">
+              <div class="card">
+                <div class="card-image" @click="showThisEbook(ebook.eid)">
                   <figure class="image">
                     <img
                       style="
@@ -144,6 +144,18 @@ export default {
           alert(error.response.data.message)
         });
       }
+    },
+    showThisEbook(ebook){
+       axios
+        .post(`http://localhost:5000/selectBook/${ebook}`, {
+          id: ebook,
+        })
+        .then((res) => {
+          this.$router.push("/ebookInfo");
+        })
+        .catch((err) => {
+          alert(err.response.data);
+        });
     },
   },
 };
