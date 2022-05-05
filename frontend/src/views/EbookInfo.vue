@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="box2 content">
-    <h1>{{ebook[0].title}}</h1>
+    <h1>{{ebook.title}}</h1>
   </div>
   </div>
 </template>
@@ -22,10 +22,10 @@ export default {
   methods: {
     async getBook() {
       await axios
-        .get("http://localhost:5000/ebook")
+        .get(`http://localhost:5000/selectBook/${this.$route.params.ebook_id}`)
         .then((res) => {
-          this.ebook = res.data;
-          console.log(res.data) 
+          this.ebook = res.data[0];
+          console.log(this.ebook)
         })
         .catch((err) => {
           alert(err.response.data.message);

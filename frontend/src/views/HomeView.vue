@@ -13,8 +13,9 @@
               v-for="ebook in e_books"
               :key="ebook.eid"
             >
-              <div class="card">
-                <div class="card-image" @click="showThisEbook(ebook.eid)">
+              <router-link :to="{ path: `/ebookInfo/${ebook.eid}` }">
+                <div class="card">
+                <div class="card-image">
                   <figure class="image">
                     <img
                       style="
@@ -67,6 +68,7 @@
                   </div>
                 </div>
               </div>
+              </router-link>
             </div>
         </div>
       </div>
