@@ -148,47 +148,16 @@ router.delete("/ebook/:id", isLoggedIn, isAdmin, async (req, res, next) => {
 
 
 );
+router.get("/selectBook/:ebook", async function (req, res, next) {
+  try {
+    const [rows, fields] = await pool.query("SELECT * FROM e_book natural JOIN author JOIN book_type ON (book_type_id = type_id) WHERE eid = ?",[req.params.ebook])
 
-//     //Delete files from the upload folder
-//     const [
-//       images,
-//       imageFields,
-//     ] = await conn.query(
-//       "SELECT `file_path` FROM `images` WHERE `blog_id` = ?",
-//       [req.params.blogId]
-//     );
-//     const appDir = path.dirname(require.main.filename); // Get app root directory
-//     console.log(appDir)
-//     images.forEach((e) => {
-//       const p = path.join(appDir, 'static', e.file_path);
-//       fs.unlinkSync(p);
-//     });
-
-//     // Delete images
-//     await conn.query("DELETE FROM `images` WHERE `blog_id` = ?", [
-//       req.params.blogId,
-//     ]);
-//     // Delete the selected blog
-//     const [
-//       rows2,
-//       fields2,
-//     ] = await conn.query("DELETE FROM `blogs` WHERE `id` = ?", [
-//       req.params.blogId,
-//     ]);
-
-//     if (rows2.affectedRows === 1) {
-//       await conn.commit();
-//       res.status(204).send();
-//     } else {
-//       throw "Cannot delete the selected blog";
-//     }
-//   } catch (err) {
-//     console.log(err)
-//     await conn.rollback();
-//     return res.status(500).json(err);
-//   } finally {
-//     conn.release();
-//   }
-// });
+    return res.json(rows);
+  }
+   catch (err) {
+    console.log("---------------")
+    return res.status(500).json(err)
+  }
+});
 
 exports.router = router;

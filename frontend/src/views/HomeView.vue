@@ -146,9 +146,7 @@ export default {
     },
     showThisEbook(ebook){
        axios
-        .post(`http://localhost:5000/selectBook/${ebook}`, {
-          id: ebook,
-        })
+        .get(`http://localhost:5000/selectBook/${ebook}`)
         .then((res) => {
           this.$router.push("/ebookInfo");
         })
