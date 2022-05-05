@@ -61,6 +61,18 @@ const router = createRouter({
       meta: { login: true },
       component: () => import('../views/ChangePassword.vue')
     },
+    {
+      path: '/type/:type_id',
+      name: 'type',
+      meta: { login: true },
+      component: () => import('../views/SelectType.vue')
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      meta: { login: true },
+      component: () => import('../views/ProfileCustomer.vue')
+    },
   ]
 })
 
