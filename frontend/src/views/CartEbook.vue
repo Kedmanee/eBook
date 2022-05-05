@@ -26,7 +26,10 @@
                     >
                   </div>
                   <div class="icon is-size-4">
-                    <i @click="deleteCartEbook(item.item_no)" class="fa fa-trash"></i>
+                    <i
+                      @click="deleteCartEbook(item.item_no)"
+                      class="fa fa-trash"
+                    ></i>
                   </div>
                 </div>
               </div>
@@ -42,13 +45,21 @@
             <div v-for="item in cart_items" :key="item.item_no">
               {{ item.title }} ♥
             </div>
-            <br>
-            <h5>รวม  {{total_price}} บาท </h5>
-            <button class="button" style="background-color:#percent;" @click="payForEbook()">ชำระเงินที่นี่♥</button>
+            <br />
+            <h5>รวม {{ total_price }} บาท</h5>
+            <button
+              class="button"
+              style="background-color: #percent"
+              @click="payForEbook()"
+            >
+              ชำระเงินที่นี่♥
+            </button>
           </div>
           <div class="column is-6 box2">
-             <a class="button" style="background-color:#percent;" href="/">♥เลือก E-book เพิ่มเติม♥</a>
-              <br>
+            <a class="button" style="background-color: #percent" href="/"
+              >♥เลือก E-book เพิ่มเติม♥</a
+            >
+            <br />
           </div>
         </div>
       </div>
@@ -74,62 +85,55 @@ export default {
     return {
       cart_items: [],
       total_price: 0,
-};
+    };
   },
   mounted() {
-    this.getBook();
+    this.getCart();
   },
   methods: {
-    async getBook() {
-      await axios
-        .get("http://localhost:5000/cart/show"), {
-          id: this.user.customer_id,
-        }
-        .then((res) => {
-          this.cart_items = res.data;
-          if(this.cart_items[0]){
-            this.total_price = this.cart_items[0].total_price
-          }
-          console.log(this.cart_items);
+    getBook() {
+      axios
+        .get("http://localhost:5000/eBook")
+        .then((response) => {
+          this.e_books = response.data;
+          console.log(this.e_books);
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          console.log(err);
         });
     },
     //ลบนส.จากตะกร้าตรงนี้นะเพื่อน
     deleteCartEbook(ebook) {
-      const result = confirm(
-        `Are you sure you want to delete`
-      );
-      if (result){
+      const result = confirm(`Are you sure you want to delete`);
+      if (result) {
         axios
-        .delete(`http://localhost:5000/cart/del/${eBook}`)
-        .then((response) => {
-          this.cart_items = this.cart_items.filter((e) => e.item_no !== eBook);
-        })
-        .catch((error) => {
-          alert(error.response.data.message)
-        });
+          .delete(`http://localhost:5000/cart/del/${eBook}`)
+          .then((response) => {
+            this.cart_items = this.cart_items.filter(
+              (e) => e.item_no !== eBook
+            );
+          })
+          .catch((error) => {
+            alert(error.response.data.message);
+          });
       }
     },
     //อันนี้กุส่งมั่ว ไปนอนแระบาย
-    payForEbook(){
-      const result = confirm(
-        `Are you sure you want to pay`
-      );
-      if (result){
+    payForEbook() {
+      const result = confirm(`Are you sure you want to pay`);
+      if (result) {
         axios
-        .post(`http://localhost:5000/cart/pay`, {
-          cart: this.cart_items[0].cart_id,
-        })
-        .then((res) => {
-          alert("Add to your collection");
-        })
-        .catch((err) => {
-          alert(err.response.data);
-        });
+          .post(`http://localhost:5000/cart/pay`, {
+            cart: this.cart_items[0].cart_id,
+          })
+          .then((res) => {
+            alert("Add to your collection");
+          })
+          .catch((err) => {
+            alert(err.response.data);
+          });
       }
-    }
+    },
   },
 };
 </script>
