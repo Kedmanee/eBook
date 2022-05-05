@@ -3,9 +3,9 @@
       <div>
     <div class="columns">
       <div class="column is-5 box3 content m-3 ml-4 p-4" style="height:fit-content">
-        <figure class="image">
+        <div class="image">
                   <img :src="'http://localhost:5000/' + ebook.imageOfEbook"/>
-                </figure>
+                </div>
       </div>
       <div class="column is-5 box3 content m-3 ml-4" style="height:fit-content"></div>
         <h1>{{ ebook.title }}</h1>
