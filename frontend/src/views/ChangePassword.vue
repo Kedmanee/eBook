@@ -37,12 +37,27 @@
                 </div>
               </div>
               <div class="field">
-                <label for="" class="label">รหัสผ่าน</label>
+                <label for="" class="label">รหัสผ่านใหม่</label>
                 <div class="control has-icons-left">
                   <input
                     type="password"
                     placeholder="*******"
                     v-model="new_password"
+                    class="input"
+                    required
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-lock"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="" class="label">ยืนยันรหัสผ่านใหม่</label>
+                <div class="control has-icons-left">
+                  <input
+                    type="password"
+                    placeholder="*******"
+                    v-model="con_new_password"
                     class="input"
                     required
                   />
@@ -76,6 +91,7 @@ export default {
     return {
       password: "",
       new_password: "",
+      con_new_password:"",
       error: "",
     };
   },
@@ -85,7 +101,8 @@ export default {
        const data = {
          password: this.password,
          new_password: this.new_password,
-         customer_id:this.user.customer_id
+         customer_id:this.user.customer_id,
+         con_new_password:this.con_new_password
        }
 
        axios
