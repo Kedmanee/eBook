@@ -32,9 +32,17 @@ const signupSchema = Joi.object({
     username: Joi.string().required().min(5).max(20).external(usernameValidator),
     password: Joi.string().custom(passwordValidator),
     phone:  Joi.string().pattern(/0[0-9]{9}/),
+    confirm_password:Joi.valid(Joi.ref('password')),
     email:  Joi.string(),
     sex:  Joi.string(),
     date:  Joi.string(),
+}).unknown();   
+
+const changepass = Joi.object({
+    password:Joi.string(),
+    new_password: Joi.string().custom(passwordValidator),
+    con_new_password:Joi.valid(Joi.ref('new_password')),
+
 }).unknown();   
 
 
@@ -161,6 +169,7 @@ const loginSchema = Joi.object({
 router.get('/user/show', async (req, res, next) => {
     try {
       const [rows, fields] = await pool.query("SELECT * FROM customer WHERE customer_id = ?", req.body.id)
+
       return res.json(rows);
     }
     catch (err) {
@@ -172,9 +181,14 @@ router.get('/user/show', async (req, res, next) => {
 //change pass
 router.put('/change_password',isLoggedIn, async (req, res, next) => {
     try {
-        console.log(req.body.customer_id)
+        const value = await changepass.validateAsync(req.body, { abortEarly: false });
+    } catch (err) {
+
+        return res.status(400).send(err.details[0].message)
+    }
+    try {
+        console.log(   )
         const pass = await pool.query('select password from customer where customer_id = ?', [req.body.customer_id])
-        console.log(pass[0])
         if (!(await bcrypt.compare(req.body.password, pass[0][0].password))) {
             return res.status(400).send('Incorrect old password')
         }

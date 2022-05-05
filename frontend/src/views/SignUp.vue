@@ -55,6 +55,24 @@
           </div>
         </div>
         <div class="field">
+          <label class="label">ยืนยันรหัสผ่าน</label>
+          <div class="control has-icons-left has-icons-right">
+            <input
+              class="input"
+              type="password"
+              placeholder="*******"
+              v-model="confirm_password"
+              required
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+            <span class="icon is-small is-right">
+              <i class="fas fa-check"></i>
+            </span>
+          </div>
+        </div>
+        <div class="field">
           <label class="label">เบอร์โทรศัพท์</label>
           <div class="control">
             <input
@@ -150,6 +168,7 @@ export default {
       sex: "",
       phone: "",
       date: "",
+      confirm_password:"",
     };
   },
   methods: {
@@ -168,6 +187,7 @@ export default {
         sex: this.sex,
         phone: this.phone,
         date: this.date,
+        confirm_password :this.confirm_password
       };
       axios
         .post("http://localhost:5000/user/signup", data)
