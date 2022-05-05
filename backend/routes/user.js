@@ -76,7 +76,6 @@ const loginSchema = Joi.object({
 
 //login
  router.post('/user/login', async (req, res, next) => {
-     console.log(req.body)
      try {
          await loginSchema.validateAsync(req.body, { abortEarly: false })
      } catch (err) {
