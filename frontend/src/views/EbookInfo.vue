@@ -9,7 +9,6 @@
 import axios from "@/plugins/axios";
 // @ is an alias to /src
 export default {
-  name: "home",
   props: ["user"],
   data() {
     return {
@@ -26,6 +25,7 @@ export default {
         .get("http://localhost:5000/ebook")
         .then((res) => {
           this.ebook = res.data;
+          console.log(res.data)
         })
         .catch((err) => {
           alert(err.response.data.message);
