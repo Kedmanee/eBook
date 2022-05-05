@@ -148,9 +148,22 @@ router.delete("/ebook/:id", isLoggedIn, isAdmin, async (req, res, next) => {
 
 
 );
+//to infobook
 router.get("/selectBook/:ebook_id", async function (req, res, next) {
   try {
     const [rows, fields] = await pool.query("SELECT * FROM e_book natural JOIN author JOIN book_type ON (book_type_id = type_id) WHERE eid = ?",[req.params.ebook_id])
+
+    return res.json(rows);
+  }
+   catch (err) {
+    console.log("---------------")
+    return res.status(500).json(err)
+  }
+});
+
+router.get("/type/:type_id", async function (req, res, next) {
+  try {
+    const [rows, fields] = await pool.query("SELECT * FROM e_book natural JOIN author JOIN book_type ON (book_type_id = type_id) WHERE book_type_id = ?",[req.params.type_id])
 
     return res.json(rows);
   }
