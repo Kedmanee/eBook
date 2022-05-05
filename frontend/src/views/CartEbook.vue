@@ -104,7 +104,7 @@ export default {
         axios
         .delete(`http://localhost:5000/cart/del/${eBook}`)
         .then((response) => {
-          this.cart_items = this.cart_items.filter((e) => e.eid !== eBook);
+          this.cart_items = this.cart_items.filter((e) => e.item_no !== eBook);
         })
         .catch((error) => {
           alert(error.response.data.message)
@@ -119,7 +119,7 @@ export default {
       if (result){
         axios
         .post(`http://localhost:5000/cart/pay`, {
-          ebook: this.cart_items,
+          cart: this.cart_items[0].cart_id,
         })
         .then((res) => {
           alert("Add to your collection");

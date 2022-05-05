@@ -44,10 +44,10 @@ const router = createRouter({
       component: () => import('../views/EbookUpLoad.vue')
     },
     {
-      path: '/cart',
-      name: 'cart',
+      path: '/ebookInfo',
+      name: 'ebookInfo',
       meta: { login: true },
-      component: () => import('../views/CartEbook.vue')
+      component: () => import('../views/EbookInfo.vue')
     },
   ]
 })
