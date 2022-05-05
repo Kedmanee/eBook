@@ -82,13 +82,14 @@ export default {
   methods: {
     async getBook() {
       await axios
-        .get("http://localhost:5000/cart/show")
+        .get("http://localhost:5000/cart/show"), {
+          id: this.user.customer_id,
+        }
         .then((res) => {
           this.cart_items = res.data;
           if(this.cart_items[0]){
             this.total_price = this.cart_items[0].total_price
           }
-          console.log('-----------------------------------------------------------------------------------------------------------')
           console.log(this.cart_items);
         })
         .catch((err) => {
