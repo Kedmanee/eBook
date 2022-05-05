@@ -3,7 +3,8 @@ const pool = require("../config")
 const Joi = require('joi')
 const bcrypt = require('bcrypt');
 const { generateToken } = require("../utils/token");
-const { isLoggedIn } = require('../middlewares')
+const { isLoggedIn } = require('../middlewares');
+const { resourceUsage } = require("process");
 
 router = express.Router();
 
@@ -171,12 +172,22 @@ router.get('/user/show', async (req, res, next) => {
 //change pass
 router.put('/change_password',isLoggedIn, async (req, res, next) => {
     try {
-        console.log(req.body)
-        return res.json(rows);
+        console.log(req.body.customer_id)
+        const pass = await pool.query('select password from customer where customer_id = ?', [req.body.customer_id])
+        console.log(pass[0])
+        if (!(await bcrypt.compare(req.body.password, pass[0][0].password))) {
+            return res.status(400).send('Incorrect old password')
+        }
+        await pool.query('update customer set password = ? where customer_id = ?', [
+            await bcrypt.hash(req.body.new_password, 5), req.body.customer_id
+            // Zaza456654
+        ])
+        return res.json({
+            message: "Change password success"
+        });
     }
     catch (err) {
-      console.log("---------------")
-      return res.status(500).json(err)
+      return res.status(500).send(err)
     }
 })
 
