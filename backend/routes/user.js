@@ -161,6 +161,7 @@ const loginSchema = Joi.object({
 router.get('/user/show', async (req, res, next) => {
     try {
       const [rows, fields] = await pool.query("SELECT * FROM customer WHERE customer_id = ?", req.body.id)
+      
       return res.json(rows);
     }
     catch (err) {
@@ -172,7 +173,7 @@ router.get('/user/show', async (req, res, next) => {
 //change pass
 router.put('/change_password',isLoggedIn, async (req, res, next) => {
     try {
-        console.log(req.body.customer_id)
+        console.log(   )
         const pass = await pool.query('select password from customer where customer_id = ?', [req.body.customer_id])
         console.log(pass[0])
         if (!(await bcrypt.compare(req.body.password, pass[0][0].password))) {
