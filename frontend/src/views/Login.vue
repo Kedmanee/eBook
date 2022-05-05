@@ -74,6 +74,7 @@
 
 <script>
 import axios from "@/plugins/axios";
+import useVuelidate from "../../node_modules/@vuelidate/core";
 export default {
   data() {
     return {

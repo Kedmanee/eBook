@@ -205,9 +205,9 @@ export default {
   },
   validations() {
     return {
-      // name: {required},
-      // password: {required},
-      // email: { required, email }, // Matches this.contact.email
+      name: {required},
+      password: {required},
+      email: { required, email }, // Matches this.contact.email
     };
   },
 };
