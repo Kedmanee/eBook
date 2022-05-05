@@ -36,7 +36,7 @@
           <div class="column">
             <h4>หนังสือครบไหมนะ?</h4>
             <div v-for="item in cart_items" :key="item.item_no">
-              {{ item.title }} ♥
+              ♥ {{ item.title }} 
             </div>
             <br>
             <h5>รวม {{ total_price }} บาท </h5>
@@ -72,10 +72,10 @@ export default {
     };
   },
   mounted() {
-    this.getBook();
+    this.getCart();
   },
   methods: {
-    async getBook() {
+    async getCart() {
       await axios
         .get(`http://localhost:5000/cart/show/${this.user.customer_id}`)
         .then((res) => {
@@ -121,6 +121,8 @@ export default {
             cart: this.cart_items[0].cart_id,
           })
           .then((res) => {
+            this.cart_items = []
+            this.total_price = 0
             alert("Add to your collection");
           })
           .catch((err) => {

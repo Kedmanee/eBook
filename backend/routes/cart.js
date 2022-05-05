@@ -27,6 +27,12 @@ router.post('/cart/add/:eid', async (req, res, next) => {
     }
 
     let [checkbook, fields3] = await conn.query('SELECT * FROM `cart_item` WHERE `cart_id` = ? AND `ebook_id` = ?', [total_price[0].cart_id, req.params.eid]);
+    
+    let [checkbookcus, fields4] = await conn.query('SELECT * FROM `customer_ebook` WHERE `customer_id` = ? AND `ebook_id` = ?', [ req.body.id, req.params.eid]);
+
+    if (checkbookcus.length > 0) {
+      throw new Error('You already own this book')
+    }
 
     if (checkbook.length > 0) {
       throw new Error('This E-book is already in cart')
@@ -57,7 +63,7 @@ router.post('/cart/add/:eid', async (req, res, next) => {
 //show cart
 router.get('/cart/show/:id', isLoggedIn, async (req, res, next) => {
   try {
-    console.log(req.params.id)
+    console.log("/show id :",req.params.id)
     const [cart, fields2] = await pool.query("SELECT cart_id FROM cart WHERE customer_id = ?;", req.params.id)
     const [newsum, fields1] = await pool.query("SELECT SUM(unit_price) `sum_price` FROM cart_item WHERE cart_id = ?;", cart[0].cart_id)
     const [updatesum, fields3] = await pool.query("UPDATE cart SET total_price = ? WHERE customer_id = ?",  [
@@ -79,17 +85,40 @@ router.delete('/cart/del/:itemno', async (req, res, next) => {
   await conn.beginTransaction();
   try {
     console.log(req.params.itemno)
-
-    // let [item_price, fie] = await conn.query("SELECT `unit_price`,`cart_id` FROM `cart_item` WHERE `item_no` = ?", [
-    //   req.params.itemno
-    // ]);
-
-    // let [settotal, fields] = await conn.query("UPDATE cart SET total_price = total_price-? WHERE cart_id = ?", [item_price,
-    //   item_price[0].cart_id
-    // ]);
-
     const del = await conn.query("DELETE FROM cart_item WHERE item_no = ?",[req.params.itemno]);
 
+    await conn.commit()
+    return res.json()
+
+  } catch (err) {
+    await conn.rollback();
+    res.status(405).json(err.toString())
+  } finally {
+    conn.release();
+  }
+})
+
+router.post('/cart/pay', isLoggedIn, async (req, res, next) => {
+  const conn = await pool.getConnection();
+  // Begin transaction
+  await conn.beginTransaction();
+  console.log(req.user.customer_id)
+  try {
+    console.log("dad")
+    console.log(req.body.cart)
+    const [sec, fields2] = await pool.query("SELECT ebook_id FROM cart_item WHERE cart_id = ?", [
+      req.body.cart
+    ])
+    sec.map(async item => {
+      await pool.query("insert into customer_ebook (ebook_id, customer_id) values (?, ?)", [
+        item.ebook_id, req.user.customer_id
+      ])
+    })
+    
+    await pool.query("delete from cart_item where cart_id = ?", [
+      req.body.cart
+    ])
+    
     await conn.commit()
     return res.json()
 
