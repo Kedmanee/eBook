@@ -177,8 +177,8 @@ router.get("/type/:type_id", async function (req, res, next) {
 //get customer book
 router.get("/mybook", async function (req, res, next) {
   try {
-    const [rows, fields] = await pool.query(" natural JOIN author JOIN book_type ON (book_type_id = type_id) WHERE customer_id=?",[req.user.customer_id])
-    console.log(rows)
+    const [rows, fields] = await pool.query("SELECT * FROM customer_ebook Join e_book ON(eid = ebook_id) natural JOIN author JOIN book_type ON (book_type_id = type_id) WHERE customer_id=?",[req.user.customer_id])
+
     return res.json(rows);
   }
    catch (err) {
