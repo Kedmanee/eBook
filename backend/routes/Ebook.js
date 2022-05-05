@@ -103,6 +103,10 @@ router.delete("/ebook/:id", isLoggedIn, isAdmin, async (req, res, next) => {
       "DELETE FROM cart_item WHERE ebook_id = ?",
       [req.params.id]
     );
+    const result = await conn.query(
+      "DELETE FROM customer_ebook WHERE ebook_id = ?",
+      [req.params.id]
+    );
     console.log(results)
     const del = await conn.query("DELETE FROM e_book WHERE eid = ?",[req.params.id]);
     await conn.commit();
