@@ -8,7 +8,7 @@
         </figure>
 
       </div>
-      <br>
+      <br />
       <div class="columns is-centered">
         <h3>
           {{ user.fname }} {{ user.lname }}
