@@ -26,7 +26,23 @@ async function isLoggedIn(req, res, next) {
     )
 
     if (users[0]) {
+        const [selectTotalEbook] = await pool.query('SELECT count(ebook_id) as `total_ebook` FROM customer_ebook WHERE customer_id = ?', [
+            token.cus_id
+        ])
         users[0].type = 'customer'
+        users[0].total_ebook = selectTotalEbook[0].total_ebook
+
+        if(users[0].total_ebook > 10){
+            await pool.query('update customer set grade = "Silver" WHERE customer_id = ?', [
+                token.cus_id
+            ])
+        }
+        if(users[0].total_ebook > 30){
+            await pool.query('update customer set grade = "Gold" WHERE customer_id = ?', [
+                token.cus_id
+            ])
+        }
+
         req.user = users[0]
     }
     else{
