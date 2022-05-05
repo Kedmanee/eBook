@@ -82,14 +82,13 @@ export default {
     submit() {
       console.log("test");
        const data = {
-         username: this.username,
-         password: this.password
+         password: this.password,
+         new_password: this.new_password,
+         customer_id:this.user.customer_id
        }
 
        axios
-        .post('http://localhost:5000/change_password', {
-            data:this.user.customer_id
-        })
+        .post('http://localhost:5000/change_password', data)
          .then(res => {
              alert('เปลี่ยนรหัสผ่านสำเร็จ')
            this.$router.push({path: '/'})
