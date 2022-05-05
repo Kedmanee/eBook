@@ -26,35 +26,6 @@ var storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// Like blog that id = blogId
-// router.put("/blogs/addlike/:blogId", async function (req, res, next) {
-//   const conn = await pool.getConnection();
-//   // Begin transaction
-//   await conn.beginTransaction();
-
-//   try {
-//     let [
-//       rows,
-//       fields,
-//     ] = await conn.query("SELECT `like` FROM `blogs` WHERE `id` = ?", [
-//       req.params.blogId,
-//     ]);
-//     let like = rows[0].like + 1;
-
-//     await conn.query("UPDATE `blogs` SET `like` = ? WHERE `id` = ?", [
-//       like,
-//       req.params.blogId,
-//     ]);
-
-//     await conn.commit();
-//     res.json({ like: like });
-//   } catch (err) {
-//     await conn.rollback();
-//     return res.status(500).json(err);
-//   } finally {
-//     conn.release();
-//   }
-// });
 const signupSchema = Joi.object({
   title: Joi.string().min(5).max(100),
   price: Joi.number(),
@@ -175,10 +146,10 @@ router.get("/type/:type_id", async function (req, res, next) {
 });
 
 //get customer book
-router.get("/mybook", async function (req, res, next) {
+router.get("/mybook",isLoggedIn, async function (req, res, next) {
   try {
+    console.log(req.user.customer_id)
     const [rows, fields] = await pool.query("SELECT * FROM customer_ebook Join e_book ON(eid = ebook_id) natural JOIN author JOIN book_type ON (book_type_id = type_id) WHERE customer_id=?",[req.user.customer_id])
-
     return res.json(rows);
   }
    catch (err) {
