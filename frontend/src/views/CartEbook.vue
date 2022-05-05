@@ -21,7 +21,10 @@
                     <span class="is-6 has-text-danger">{{ item.price }} บาท</span>
                   </div>
                   <div class="icon is-size-4">
-                    <i @click="deleteCartEbook(item.item_no)" class="fa fa-trash"></i>
+                    <i
+                      @click="deleteCartEbook(item.item_no)"
+                      class="fa fa-trash"
+                    ></i>
                   </div>
                 </div>
               </div>
@@ -86,7 +89,7 @@ export default {
           console.log(this.cart_items);
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          console.log(err);
         });
     },
     //ลบนส.จากตะกร้าตรงนี้นะเพื่อน
@@ -129,7 +132,7 @@ export default {
             alert(err.response.data);
           });
       }
-    }
+    },
   },
 };
 </script>
