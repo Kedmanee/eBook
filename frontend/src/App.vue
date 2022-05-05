@@ -32,12 +32,12 @@ import HelloWorld from '@/components/HelloWorld.vue'
               <a class="navbar-link"> e-book </a>
 
               <div class="navbar-dropdown">
-                <a class="navbar-item"> มังงะ </a>
-                <a class="navbar-item"> นิยาย </a>
-                <a class="navbar-item"> นิยายแปล </a>
-                <a class="navbar-item"> หนังสือเด็ก </a>
+                <router-link :to="{ path: `/type/1` }"><a class="navbar-item"> มังงะ </a></router-link>
+                <router-link :to="{ path: `/type/2` }"><a class="navbar-item"> นิยาย </a></router-link>
+                <router-link :to="{ path: `/type/3` }"><a class="navbar-item"> นิยายแปล </a></router-link>
+                <router-link :to="{ path: `/type/4` }"><a class="navbar-item"> หนังสือเด็ก </a></router-link>
                 <hr class="navbar-divider" />
-                <a class="navbar-item"> ทั้งหมด </a>
+                <a class="navbar-item" href="/"> ทั้งหมด </a>
               </div>
             </div>
             <a class="navbar-item" v-if="user && user.type == 'admin'" href="/upload"> เพิ่มหนังสือลงระบบ </a>
@@ -64,7 +64,6 @@ import HelloWorld from '@/components/HelloWorld.vue'
                 </div>
               </div>
             </a>
-            <!-- ทำ Profile ตรงนี้ -->
           </div>
         </div>
       </nav>
@@ -128,7 +127,19 @@ export default {
       localStorage.removeItem("token")
       this.user = null
       this.$router.push("/");
-    }
+    },
+    addToCart(eBook) {
+      axios
+        .post(`http://localhost:5000/cart/add/${eBook}`, {
+          id: this.user.customer_id,
+        })
+        .then((res) => {
+          alert("Add to cart success");
+        })
+        .catch((err) => {
+          alert(err.response.data);
+        });
+    },
   }
 }
 </script>
