@@ -41,9 +41,9 @@
             <br>
             <h5>รวม {{ total_price }} บาท </h5>
             <router-link to="/">
-              <button class="button" style="background-color:#percent;" href="/">♥เลือก E-book เพิ่มเติม♥</button>
+              <button class="button is-info" style="background-color:#percent;" href="/">♥เลือก E-book เพิ่มเติม♥</button>
             </router-link>
-            <button class="button ml" style="background-color:#percent;" @click="payForEbook()">ชำระเงินที่นี่♥</button>
+            <button class="button ml-2 is-success" style="background-color:#percent;" @click="payForEbook()">ชำระเงินที่นี่♥</button>
           </div>
         </div>
       </div>
