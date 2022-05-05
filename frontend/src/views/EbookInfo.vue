@@ -25,7 +25,7 @@ export default {
         .get("http://localhost:5000/ebook")
         .then((res) => {
           this.ebook = res.data;
-          console.log(res.data)
+          console.log(res.data) 
         })
         .catch((err) => {
           alert(err.response.data.message);
