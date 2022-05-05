@@ -55,10 +55,16 @@ router.post('/cart/add/:eid', async (req, res, next) => {
 })
 
 //show cart
-router.get('/cart/show', isLoggedIn, async (req, res, next) => {
+router.get('/cart/show/:id', isLoggedIn, async (req, res, next) => {
   try {
+    console.log(req.params.id)
+    const [cart, fields2] = await pool.query("SELECT cart_id FROM cart WHERE customer_id = ?;", req.params.id)
+    const [newsum, fields1] = await pool.query("SELECT SUM(unit_price) `sum_price` FROM cart_item WHERE cart_id = ?;", cart[0].cart_id)
+    const [updatesum, fields3] = await pool.query("UPDATE cart SET total_price = ? WHERE customer_id = ?",  [
+      newsum[0].sum_price, req.params.id
+    ])
+
     const [rows, fields] = await pool.query("SELECT * FROM cart_item natural JOIN cart JOIN e_book ON (eid = ebook_id) WHERE customer_id = ?", req.user.customer_id)
-    console.log(rows)
     return res.json(rows);
   }
   catch (err) {
@@ -72,14 +78,17 @@ router.delete('/cart/del/:itemno', async (req, res, next) => {
   // Begin transaction
   await conn.beginTransaction();
   try {
+    console.log(req.params.itemno)
 
-    let [item_price, fie] = await conn.query("SELECT `unit_price`,`cart_id` FROM `cart_item` WHERE `item_no` = ?", [
-      req.params.itemno
-    ]);
+    // let [item_price, fie] = await conn.query("SELECT `unit_price`,`cart_id` FROM `cart_item` WHERE `item_no` = ?", [
+    //   req.params.itemno
+    // ]);
 
-    let [settotal, fields] = await conn.query("UPDATE cart SET total_price = total_price-? WHERE cart_id = ?", [item_price,
-      item_price[0].cart_id
-    ]);
+    // let [settotal, fields] = await conn.query("UPDATE cart SET total_price = total_price-? WHERE cart_id = ?", [item_price,
+    //   item_price[0].cart_id
+    // ]);
+
+    const del = await conn.query("DELETE FROM cart_item WHERE item_no = ?",[req.params.itemno]);
 
     await conn.commit()
     return res.json()
