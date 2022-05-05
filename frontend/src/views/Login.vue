@@ -62,7 +62,10 @@
                 </button>
               </div>
               <div class="field">
-                <div>ยังไม่มีบัญชีผู้ใช้หรอ?</div><a st href="/signUp" style="color: #6A5ACD;">สมัครสมาชิกที่นี่</a>
+                <div>ยังไม่มีบัญชีผู้ใช้หรอ?</div>
+                <a st href="/signUp" style="color: #6a5acd"
+                  >สมัครสมาชิกที่นี่</a
+                >
               </div>
             </form>
           </div>
@@ -75,7 +78,11 @@
 <script>
 import axios from "@/plugins/axios";
 import useVuelidate from "../../node_modules/@vuelidate/core";
+import { required } from "../../node_modules/@vuelidate/validators";
 export default {
+  setup() {
+    return { v$: useVuelidate() };
+  },
   data() {
     return {
       username: "",
@@ -83,26 +90,34 @@ export default {
       error: "",
     };
   },
+  validations() {
+    return {
+      username: { required },
+      password: { required },
+    };
+  },
   methods: {
     submit() {
-      console.log("test");
-       const data = {
-         username: this.username,
-         password: this.password
-       }
-
-       axios
-        .post('http://localhost:5000/user/login', data)
-         .then(res => {
-           const token = res.data.token
-           localStorage.setItem('token', token)
-           this.$emit('auth-change')
-           this.$router.push({path: '/'})
-         })
-         .catch(error => {
-           this.error = error.response.data
-           console.log(error.response.data)
-         })
+      if (this.v$.$invalid) {
+        return alert("กรุณาใส่ข้อมูลให้ครบด้วยน้า");
+      }
+      // console.log("test");
+      const data = {
+        username: this.username,
+        password: this.password,
+      };
+      axios
+        .post("http://localhost:5000/user/login", data)
+        .then((res) => {
+          const token = res.data.token;
+          localStorage.setItem("token", token);
+          this.$emit("auth-change");
+          this.$router.push({ path: "/" });
+        })
+        .catch((error) => {
+          this.error = error.response.data;
+          console.log(error.response.data);
+        });
     },
   },
 };

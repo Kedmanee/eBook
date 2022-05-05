@@ -36,9 +36,14 @@
       <div class="columns is-centered">
         <h5>RANK: {{ user.grade }}</h5>
       </div>
+      <div class="columns is-centered">
+          <router-link to="/change_password"><button  class="button is-link">เปลี่ยนรหัสผ่าน♥</button></router-link>
+        </div>
+        <br />
+        <br />
     </div>
     <div class="box2 content">
-      <h1>e-book ของเรา♥</h1>
+      <h1>e-book ของฉัน♥</h1>
     </div>
     <div>
       <div class="box3 is-max-desktop">
@@ -46,7 +51,7 @@
             <div
               id="card_product"
               class="column is-one-quarter"
-              v-for="userBook in e_books"
+              v-for="userBook in userBook "
               :key="userBook.eid"
             >
                 <div class="card">
@@ -113,6 +118,13 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    imagePath(imageOfEbook) {
+      if (imageOfEbook) {
+        return "http://localhost:5000/" + imageOfEbook;
+      } else {
+        return "https://bulma.io/images/placeholders/640x360.png";
+      }
     },
   },
 };

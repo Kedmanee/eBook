@@ -85,8 +85,13 @@
 </template>
 <script>
 import axios from "@/plugins/axios";
+import useVuelidate from "../../node_modules/@vuelidate/core";
+import { required } from "../../node_modules/@vuelidate/validators";
 export default {
   props: ['user'],
+  setup() {
+    return { v$: useVuelidate() };
+  },
   data() {
     return {
       password: "",
@@ -95,8 +100,18 @@ export default {
       error: "",
     };
   },
+  validations() {
+    return {
+      username: { required },
+      password: { required },
+    };
+  },
   methods: {
     submit() {
+      if (this.v$.$invalid) {
+        return alert("กรุณาใส่ข้อมูลให้ครบด้วยน้า");
+      }
+      // console.log("test");
       console.log("test");
        const data = {
          password: this.password,
