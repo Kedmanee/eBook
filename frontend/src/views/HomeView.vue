@@ -89,7 +89,6 @@
 import axios from "@/plugins/axios";
 // @ is an alias to /src
 export default {
-  name: "home",
   props: ["user"],
   data() {
     return {
