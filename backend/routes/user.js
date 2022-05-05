@@ -168,7 +168,9 @@ const loginSchema = Joi.object({
 //show user
 router.get('/user/show', async (req, res, next) => {
     try {
-      const [rows, fields] = await pool.query("SELECT * FROM customer WHERE customer_id = ?", req.body.id)
+        const [amt, fields1] = await pool.query("SELECT * FROM customer_ebook WHERE customer_id = ?", req.body.id)
+        console.log(amt)
+        const [rows, fields] = await pool.query("SELECT * FROM customer WHERE customer_id = ?", req.body.id)
 
       return res.json(rows);
     }
