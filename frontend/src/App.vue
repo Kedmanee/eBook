@@ -54,12 +54,11 @@ import HelloWorld from '@/components/HelloWorld.vue'
 
           </div>
           <div class="navbar-end" v-else>
-            <a class="navbar-item " href="/profile"> <i class="fas fa-user" aria-hidden="true" v-if="user && user.type !== 'admin'"></i> </a>
-            <a class="navbar-item " href="/cart"> <i class="fa fa-shopping-cart" aria-hidden="true" v-if="user && user.type !== 'admin'"></i> </a>
+            <a class="navbar-item " href="/profile" v-if="user && user.type !== 'admin'"> <i class="fas fa-user" aria-hidden="true" ></i> </a>
+            <a class="navbar-item " href="/cart" v-if="user && user.type !== 'admin'"> <i class="fa fa-shopping-cart" aria-hidden="true" ></i> </a>
             <a class="navbar-item">
               <div class="buttons">
                 <div class="button" style="background-color:#E9EFC0;" @click="logOut">
-                  
                   Log out
                 </div>
               </div>

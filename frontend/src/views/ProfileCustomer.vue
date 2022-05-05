@@ -43,7 +43,7 @@
         <br />
     </div>
     <div class="box2 content">
-      <h1>e-book ของฉัน♥</h1>
+      <h1>e-book ของฉัน♥ ({{userBook.length}})</h1>
     </div>
     <div>
       <div class="box3 is-max-desktop">
