@@ -87,7 +87,7 @@ export default {
        }
 
        axios
-        .post('http://localhost:5000/change_password', {
+        .put('http://localhost:5000/change_password', {
             data:this.user.customer_id
         })
          .then(res => {

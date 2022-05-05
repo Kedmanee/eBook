@@ -168,6 +168,18 @@ router.get('/user/show', async (req, res, next) => {
     }
   })
 
+//change pass
+router.put('/change_password',isLoggedIn, async (req, res, next) => {
+    try {
+        console.log(req.body)
+        return res.json(rows);
+    }
+    catch (err) {
+      console.log("---------------")
+      return res.status(500).json(err)
+    }
+})
+
  router.get('/user/me', isLoggedIn, async (req, res, next) => {
      res.json(req.user)
     //  res.json({user:req.user})
