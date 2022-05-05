@@ -168,14 +168,14 @@ const loginSchema = Joi.object({
 //show user
 router.get('/user/show', async (req, res, next) => {
     try {
-        const [amt, fields1] = await pool.query("SELECT * FROM customer_ebook WHERE customer_id = ?", req.body.id)
-        console.log(amt)
+        // const [amt, fields1] = await pool.query("SELECT * FROM customer WHERE customer_id = ?", req.body.id)
+        // console.log(amt)
         const [rows, fields] = await pool.query("SELECT * FROM customer WHERE customer_id = ?", req.body.id)
 
       return res.json(rows);
     }
     catch (err) {
-      console.log("---------------")
+      console.log("-----")
       return res.status(500).json(err)
     }
   })
