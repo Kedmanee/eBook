@@ -8,7 +8,7 @@
         <div class="columns is-centered">
           <div>
             <form class="box content">
-              <h1>ลงชื่อเข้าใช้</h1>
+              <h1>เปลี่ยนรหัสผ่าน♥</h1>
 
               <p
                 v-if="error"
@@ -23,11 +23,11 @@
               </p>
 
               <div class="field">
-                <label for="" class="label">ชื่อผู้ใช้</label>
+                <label for="" class="label">รหัสผ่านเดิม</label>
                 <div class="control has-icons-left">
                   <input
                     type="text"
-                    v-model="username"
+                    v-model="password"
                     class="input"
                     required
                   />
@@ -42,7 +42,7 @@
                   <input
                     type="password"
                     placeholder="*******"
-                    v-model="password"
+                    v-model="new_password"
                     class="input"
                     required
                   />
@@ -58,11 +58,8 @@
                   type="button"
                   @click="submit"
                 >
-                  เข้าสู่ระบบ
+                  เปลี่ยนรหัสผ่าน
                 </button>
-              </div>
-              <div class="field">
-                <div>ยังไม่มีบัญชีผู้ใช้หรอ?</div><a st href="/signUp" style="color: #6A5ACD;">สมัครสมาชิกที่นี่</a>
               </div>
             </form>
           </div>
@@ -71,14 +68,13 @@
     </div>
   </section>
 </template>
-
 <script>
 import axios from "@/plugins/axios";
 export default {
   data() {
     return {
-      username: "",
       password: "",
+      new_password: "",
       error: "",
     };
   },
@@ -91,11 +87,11 @@ export default {
        }
 
        axios
-        .post('http://localhost:5000/user/login', data)
+        .post('http://localhost:5000/change_password', {
+            data:this.user.customer_id
+        })
          .then(res => {
-           const token = res.data.token
-           localStorage.setItem('token', token)
-           this.$emit('auth-change')
+             alert('เปลี่ยนรหัสผ่านสำเร็จ')
            this.$router.push({path: '/'})
          })
          .catch(error => {
