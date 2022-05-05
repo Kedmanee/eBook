@@ -13,7 +13,7 @@
               v-for="ebook in e_books"
               :key="ebook.eid"
             >
-              <div class="card">
+              <div class="card" @click="showThisEbook()">
                 <div class="card-image">
                   <figure class="image">
                     <img

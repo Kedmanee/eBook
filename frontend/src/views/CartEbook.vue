@@ -104,7 +104,7 @@ export default {
         axios
         .delete(`http://localhost:5000/cart/del/${eBook}`)
         .then((response) => {
-          this.e_books = this.e_books.filter((e) => e.eid !== eBook);
+          this.cart_items = this.cart_items.filter((e) => e.eid !== eBook);
         })
         .catch((error) => {
           alert(error.response.data.message)
