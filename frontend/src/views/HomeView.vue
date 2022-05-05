@@ -137,10 +137,8 @@ export default {
         axios
         .delete(`http://localhost:5000/ebook/${eBook}`)
         .then((response) => {
-          
+          this.e_books = this.e_books.filter((e) => e.eid !== eBook);
           alert("Delete success");
-          this.$router.push('/')
-          
         })
         .catch((error) => {
           alert(error.response.data.message)

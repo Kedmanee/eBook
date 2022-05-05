@@ -62,7 +62,6 @@ router.get('/cart/show', isLoggedIn, async (req, res, next) => {
     return res.json(rows);
   }
   catch (err) {
-    console.log("---------------")
     return res.status(500).json(err)
   }
 })
