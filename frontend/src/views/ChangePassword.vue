@@ -26,7 +26,7 @@
                 <label for="" class="label">รหัสผ่านเดิม</label>
                 <div class="control has-icons-left">
                   <input
-                    type="text"
+                    type="password"
                     v-model="password"
                     class="input"
                     required
