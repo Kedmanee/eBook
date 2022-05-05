@@ -71,6 +71,7 @@
 <script>
 import axios from "@/plugins/axios";
 export default {
+  props: ['user'],
   data() {
     return {
       password: "",
@@ -88,9 +89,9 @@ export default {
        }
 
        axios
-        .post('http://localhost:5000/change_password', data)
+        .put('http://localhost:5000/change_password', data)
          .then(res => {
-             alert('เปลี่ยนรหัสผ่านสำเร็จ')
+             alert(res.data.message)
            this.$router.push({path: '/'})
          })
          .catch(error => {
