@@ -148,9 +148,9 @@ router.delete("/ebook/:id", isLoggedIn, isAdmin, async (req, res, next) => {
 
 
 );
-router.get("/selectBook/:ebook", async function (req, res, next) {
+router.get("/selectBook/:ebook_id", async function (req, res, next) {
   try {
-    const [rows, fields] = await pool.query("SELECT * FROM e_book natural JOIN author JOIN book_type ON (book_type_id = type_id) WHERE eid = ?",[req.params.ebook])
+    const [rows, fields] = await pool.query("SELECT * FROM e_book natural JOIN author JOIN book_type ON (book_type_id = type_id) WHERE eid = ?",[req.params.ebook_id])
 
     return res.json(rows);
   }
