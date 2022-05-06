@@ -113,7 +113,7 @@ export default {
           });
       }
     },
-    //อันนี้กุส่งมั่ว ไปนอนแระบาย
+    //ไปนอนแระบาย
     payForEbook() {
       const result = confirm(
         `Are you sure you want to pay`
