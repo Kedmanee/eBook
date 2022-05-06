@@ -56,7 +56,7 @@
                   class="button is-success"
                   style="background-color: #e9efc0; color: #534340"
                   type="button"
-                  @click="submit"
+                  @click="submit()"
                 >
                   เข้าสู่ระบบ
                 </button>
