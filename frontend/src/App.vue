@@ -67,7 +67,6 @@ import HelloWorld from '@/components/HelloWorld.vue'
         </div>
       </nav>
     </div>
-
     <router-view :key="$route.fullPath" @auth-change="onAuthChange" :user="user" />
   </div>
 </template>
