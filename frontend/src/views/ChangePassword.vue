@@ -122,7 +122,7 @@ export default {
 
        axios
         .put('http://localhost:5000/change_password', data)
-         .then(res => {
+         .then((res) => {
              alert(res.data.message)
            this.$router.push({path: '/'})
          })
