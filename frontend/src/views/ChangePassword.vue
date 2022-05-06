@@ -102,7 +102,8 @@ export default {
   },
   validations() {
     return {
-      username: { required },
+      new_password: { required },
+      con_new_password: { required },
       password: { required },
     };
   },
@@ -112,7 +113,6 @@ export default {
         return alert("กรุณาตรวจสอบข้อมูลให้ดีด้วยน้า");
       }
       // console.log("test");
-      console.log("test");
        const data = {
          password: this.password,
          new_password: this.new_password,
