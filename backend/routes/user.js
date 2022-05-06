@@ -29,7 +29,7 @@ const usernameValidator = async (value, helpers) => {
 
 const signupSchema = Joi.object({
     name: Joi.string(),
-    username: Joi.string().required().min(5).max(20).external(usernameValidator),
+    username: Joi.string().min(5).max(20).external(usernameValidator),
     password: Joi.string().custom(passwordValidator),
     phone:  Joi.string().pattern(/0[0-9]{9}/),
     confirm_password:Joi.valid(Joi.ref('password')),
@@ -97,7 +97,7 @@ const loginSchema = Joi.object({
      await conn.beginTransaction()
  
      try {
-         // Check if username is correct
+         // Check username correct
          const [users] = await conn.query(
              'SELECT * FROM customer WHERE username=?', 
              [username]
@@ -116,7 +116,7 @@ const loginSchema = Joi.object({
          if (!user) {
              throw new Error('Incorrect username or password')
          }
-             // Check if password is correct
+             // Check password
          if (!(await bcrypt.compare(password, user.password))) {
              throw new Error('Incorrect username or password')
          }
@@ -168,8 +168,6 @@ const loginSchema = Joi.object({
 //show user
 router.get('/user/show', async (req, res, next) => {
     try {
-        // const [amt, fields1] = await pool.query("SELECT * FROM customer WHERE customer_id = ?", req.body.id)
-        // console.log(amt)
         const [rows, fields] = await pool.query("SELECT * FROM customer WHERE customer_id = ?", req.body.id)
 
       return res.json(rows);
